@@ -9,6 +9,8 @@ import Footer from "./components/Footer/Footer";
 import { BrowserRouter, Route, Routes } from "react-router";
 import Subscriptions from "./pages/Subscriptions/Subscriptions";
 import Support from "./pages/Support/Support";
+import Login from "./pages/Login/Login";
+
 
 export default function App() {
   const { darkTheme, theme, toggleTheme } = useContext(GlobalContext);
@@ -22,6 +24,7 @@ export default function App() {
           <Route path="/" Component={Home} />
           <Route path="/subscriptions" Component={Subscriptions} />
           <Route path="/support" Component={Support} />
+          <Route path="/login" Component={Login} />
         </Routes>
 
         <Footer />

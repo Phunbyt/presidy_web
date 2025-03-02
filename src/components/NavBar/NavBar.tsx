@@ -164,7 +164,7 @@ const NavBar = () => {
             </FormGroup>
 
             <Link
-              href="#login" // Add href for navigation
+              href="/login" // Add href for navigation
               sx={{
                 color: darkTheme ? "#ffffff" : "#000000", // Dynamic text color based on theme
                 textDecoration: "none",
