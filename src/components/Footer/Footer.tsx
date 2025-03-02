@@ -34,7 +34,6 @@ const Footer = () => {
     { name: "FAQs", link: "/faqs" },
   ];
 
-
   useEffect(() => {
     const serviceId = location.hash.substring(1);
 
@@ -87,9 +86,6 @@ const Footer = () => {
                   style={{
                     textDecoration: "none",
                     color: theme.palette.text.secondary, // Use theme color for icons
-                    "&:hover": {
-                      color: theme.palette.primary.main, // Change color on hover
-                    },
                   }}
                 >
                   {item.icon}
@@ -123,9 +119,6 @@ const Footer = () => {
                   style={{
                     textDecoration: "none",
                     color: theme.palette.text.secondary, // Use theme color for links
-                    "&:hover": {
-                      color: theme.palette.primary.main, // Change color on hover
-                    },
                   }}
                 >
                   <CustomText text={link.name} />
@@ -159,9 +152,6 @@ const Footer = () => {
                   style={{
                     textDecoration: "none",
                     color: theme.palette.text.secondary, // Use theme color for links
-                    "&:hover": {
-                      color: theme.palette.primary.main, // Change color on hover
-                    },
                   }}
                 >
                   <CustomText text={resource.name} />

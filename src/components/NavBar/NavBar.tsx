@@ -12,12 +12,11 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import NavList from "./NavList";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import CustomButton from "../CustomButton/CustomButton";
 import { presidyLogo } from "../../assets/images";
 import { GlobalContext } from "../../context/GlobalContext";
 import { MaterialUISwitch } from "./MuiSwitch";
-import { useLocation } from "react-router";
 
 const pages = [
   { name: "About", id: "/#about" },
@@ -30,7 +29,7 @@ const NavBar = () => {
 
   const [open, setOpen] = useState(false);
 
-  const toggleDrawer = (newOpen) => () => {
+  const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
 

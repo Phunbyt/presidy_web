@@ -11,8 +11,38 @@ import SearchIcon from "@mui/icons-material/Search";
 import PlanCard from "../../components/Plans/PlanCard";
 import { done } from "../../assets/svgs";
 import CustomText from "../../components/CustomText/CustomText";
+import { Key } from "react";
 
-const AvailableSubscriptions = ({ availableSubscriptionsData }) => {
+interface Subscription {
+  _id: {
+    $oid: string;
+  };
+  name: string;
+  price: number;
+  currency: string;
+  country: string;
+  logoUrl: string;
+  planUrl: string;
+  planCode: string;
+  status: string;
+  members: number;
+  specialEmail: boolean;
+  familySize: number;
+  createdAt: {
+    $date: string;
+  };
+  updatedAt: {
+    $date: string;
+  };
+  __v: number;
+}
+interface AvailableSubscriptionsProps {
+  availableSubscriptionsData: Subscription[];
+}
+
+const AvailableSubscriptions = ({
+  availableSubscriptionsData,
+}: AvailableSubscriptionsProps) => {
   const theme = useTheme();
 
   return (
@@ -100,36 +130,47 @@ const AvailableSubscriptions = ({ availableSubscriptionsData }) => {
                 width: "100%", // Ensure grid takes full width on smaller screens
               }}
             >
-              {availableSubscriptionsData.map((item, index) => (
-                <Grid key={index} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-                  {/* Correctly sized grid items */}
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center", // Center the PlanCard
-                    }}
-                  >
-                    <PlanCard
-                      logoUrl={item.logoUrl}
-                      name={item.name}
-                      price={item.price}
-                      currency={item.currency}
-                      country={item.country}
-                      logoStyle={{
-                        height: { xs: 30, sm: 50, md: 70 }, // Responsive logo size
-                        width: { xs: 30, sm: 50, md: 70 }, // Responsive logo size
+              {availableSubscriptionsData.map(
+                (
+                  item: {
+                    logoUrl: string;
+                    name: string;
+                    price: number;
+                    currency: string;
+                    country: string;
+                  },
+                  index: Key | null | undefined
+                ) => (
+                  <Grid key={index} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+                    {/* Correctly sized grid items */}
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center", // Center the PlanCard
                       }}
-                      headerTextStyle={{
-                        fontSize: {
-                          xs: ".6rem",
-                          sm: ".8rem",
-                          md: "1rem",
-                        }, // Responsive font size
-                      }}
-                    />
-                  </Box>
-                </Grid>
-              ))}
+                    >
+                      <PlanCard
+                        logoUrl={item.logoUrl}
+                        name={item.name}
+                        price={item.price}
+                        currency={item.currency}
+                        country={item.country}
+                        logoStyle={{
+                          height: { xs: 30, sm: 50, md: 70 }, // Responsive logo size
+                          width: { xs: 30, sm: 50, md: 70 }, // Responsive logo size
+                        }}
+                        headerTextStyle={{
+                          fontSize: {
+                            xs: ".6rem",
+                            sm: ".8rem",
+                            md: "1rem",
+                          }, // Responsive font size
+                        }}
+                      />
+                    </Box>
+                  </Grid>
+                )
+              )}
             </Grid>
           </Box>
         </Stack>

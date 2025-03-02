@@ -1,4 +1,4 @@
-import { ThemeProvider, createTheme, responsiveFontSizes } from "@mui/material/styles";
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import { createContext, useState } from "react";
 
 const GlobalContext = createContext({
@@ -13,7 +13,9 @@ const COLORS = {
   RED: "#abcde3",
 };
 
-const GlobalContextProvider = ({ children }) => {
+import { ReactNode } from "react";
+
+const GlobalContextProvider = ({ children }: { children: ReactNode }) => {
   const [darkTheme, setDarkTheme] = useState(true);
 
   const theme = responsiveFontSizes(

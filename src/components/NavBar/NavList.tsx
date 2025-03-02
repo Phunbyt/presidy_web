@@ -1,6 +1,5 @@
-import { FormControlLabel, FormGroup, Link, Stack } from "@mui/material";
+import { Link, Stack } from "@mui/material";
 import CustomButton from "../CustomButton/CustomButton";
-import { MaterialUISwitch } from "./MuiSwitch";
 
 const pages = [
   { name: "Home", id: "/" },

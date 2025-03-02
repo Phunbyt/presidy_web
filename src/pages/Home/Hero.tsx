@@ -1,12 +1,10 @@
-import { Box, Stack, useTheme, useMediaQuery } from "@mui/material";
+import { Box, Stack, useTheme } from "@mui/material";
 import { businessPlan } from "../../assets/svgs";
 import CustomText from "../../components/CustomText/CustomText";
 import CustomButton from "../../components/CustomButton/CustomButton";
 
 const Hero = () => {
   const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm")); // Check for small screens
-  const isMediumScreen = useMediaQuery(theme.breakpoints.between("sm", "md")); // Check for medium screens
 
   return (
     <Stack

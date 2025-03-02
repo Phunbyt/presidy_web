@@ -5,12 +5,41 @@ import UserPlanCard from "../../components/Plans/UserPlanCard";
 import { noComments } from "../../assets/svgs";
 import CustomText from "../../components/CustomText/CustomText";
 
-const UserSubscriptions = ({ userSubscriptionsData }) => {
+interface Subscription {
+  _id: {
+    $oid: string;
+  };
+  name: string;
+  price: number;
+  currency: string;
+  country: string;
+  logoUrl: string;
+  planUrl: string;
+  planCode: string;
+  status: string;
+  members: number;
+  specialEmail: boolean;
+  familySize: number;
+  createdAt: {
+    $date: string;
+  };
+  updatedAt: {
+    $date: string;
+  };
+  __v: number;
+}
+
+interface UserSubscriptionsProps {
+  userSubscriptionsData: Subscription[];
+}
+
+const UserSubscriptions = ({
+  userSubscriptionsData,
+}: UserSubscriptionsProps) => {
   const theme = useTheme();
 
   // Custom arrow components
-  const NextArrow = (props) => {
-    const { onClick } = props;
+  const NextArrow = ({ onClick }: { onClick?: () => void }) => {
     return (
       <Box
         sx={{
@@ -32,8 +61,7 @@ const UserSubscriptions = ({ userSubscriptionsData }) => {
     );
   };
 
-  const PrevArrow = (props) => {
-    const { onClick } = props;
+  const PrevArrow = ({ onClick }: { onClick?: () => void }) => {
     return (
       <Box
         sx={{

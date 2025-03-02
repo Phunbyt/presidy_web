@@ -11,8 +11,7 @@ const Plans = () => {
   const theme = useTheme();
 
   // Custom arrow components
-  const NextArrow = (props) => {
-    const { onClick } = props;
+  const NextArrow = ({ onClick }: { onClick?: () => void }) => {
     return (
       <Box
         sx={{
@@ -34,8 +33,7 @@ const Plans = () => {
     );
   };
 
-  const PrevArrow = (props) => {
-    const { onClick } = props;
+  const PrevArrow = ({ onClick }: { onClick?: () => void }) => {
     return (
       <Box
         sx={{
