@@ -10,6 +10,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import Subscriptions from "./pages/Subscriptions/Subscriptions";
 import Support from "./pages/Support/Support";
 import Login from "./pages/Login/Login";
+import SignUp from "./pages/SignUp/SignUp";
 
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/subscriptions" Component={Subscriptions} />
           <Route path="/support" Component={Support} />
           <Route path="/login" Component={Login} />
+          <Route path="/signup" Component={SignUp} />
         </Routes>
 
         <Footer />

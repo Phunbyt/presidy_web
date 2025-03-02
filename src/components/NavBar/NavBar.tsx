@@ -184,13 +184,14 @@ const NavBar = () => {
                 }}
               />
             </Link>
+            <Link to="/signup">
             <CustomButton
               text="Sign Up"
               sx={{
                 padding: { xs: "0.5em 1em", sm: "0.8em 1.5em" }, // Responsive padding
                 fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" }, // Responsive font size
               }}
-            />
+            /></Link>
           </Stack>
         </Toolbar>
       </Container>

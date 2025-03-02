@@ -9,6 +9,7 @@ import noComments from "./NoComments.svg";
 import done from "./Done.svg";
 import messageSent from "./MessageSent.svg";
 import relationship from "./Relationship.svg";
+import welcome from "./Welcome.svg";
 
 export {
   businessPlan,
@@ -22,4 +23,5 @@ export {
   done,
   messageSent,
   relationship,
+  welcome,
 };

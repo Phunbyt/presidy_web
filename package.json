@@ -18,12 +18,14 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.2.0",
+    "react-select-country-list": "^2.2.3",
     "react-slick": "^0.30.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
+    "@types/react-select-country-list": "^2.2.3",
     "@types/react-slick": "^0.23.13",
     "@vitejs/plugin-react-swc": "^3.8.0",
     "eslint": "^9.21.0",
