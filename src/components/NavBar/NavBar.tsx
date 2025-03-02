@@ -1,6 +1,5 @@
 import {
   Stack,
-  Link,
   Toolbar,
   Container,
   AppBar,
@@ -17,6 +16,8 @@ import CustomButton from "../CustomButton/CustomButton";
 import { presidyLogo } from "../../assets/images";
 import { GlobalContext } from "../../context/GlobalContext";
 import { MaterialUISwitch } from "./MuiSwitch";
+import { Link } from "react-router"; // Keep the import as is
+import CustomText from "../CustomText/CustomText"; // Import CustomText
 
 const pages = [
   { name: "About", id: "/#about" },
@@ -26,7 +27,6 @@ const pages = [
 
 const NavBar = () => {
   const { darkTheme, toggleTheme } = useContext(GlobalContext);
-
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -51,7 +51,8 @@ const NavBar = () => {
           }}
         >
           {/* Logo */}
-          <Link href={"/"}>
+          <Link to="/">
+            {/* Use `to` instead of `href` */}
             <Box
               sx={{
                 display: "flex",
@@ -80,6 +81,7 @@ const NavBar = () => {
           >
             <MenuIcon sx={{ fontSize: "2rem" }} /> {/* Responsive icon size */}
           </IconButton>
+
           {/* Mobile Drawer */}
           <Drawer
             open={open}
@@ -115,6 +117,7 @@ const NavBar = () => {
 
             <NavList />
           </Drawer>
+
           {/* Desktop Navigation Links */}
           <Stack
             direction="row"
@@ -127,20 +130,23 @@ const NavBar = () => {
             {pages.map((page) => (
               <Link
                 key={page.id}
-                href={`${page.id}`} // Add href for navigation
-                sx={{
-                  textDecoration: "none",
-                  color: darkTheme ? "#ffffff" : "#000000", // Dynamic text color based on theme
-                  fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" }, // Responsive font size
-                  "&:hover": {
-                    color: darkTheme ? "#90caf9" : "#1976d2", // Hover effect
-                  },
-                }}
+                to={page.id} // Use `to` instead of `href`
+                style={{ textDecoration: "none" }} // Remove default underline
               >
-                {page.name}
+                <CustomText
+                  text={page.name}
+                  style={{
+                    color: darkTheme ? "#ffffff" : "#000000", // Dynamic text color based on theme
+                    fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" }, // Responsive font size
+                    "&:hover": {
+                      color: darkTheme ? "#90caf9" : "#1976d2", // Hover effect
+                    },
+                  }}
+                />
               </Link>
             ))}
           </Stack>
+
           {/* Desktop Login and Sign Up */}
           <Stack
             direction="row"
@@ -164,17 +170,19 @@ const NavBar = () => {
             </FormGroup>
 
             <Link
-              href="/login" // Add href for navigation
-              sx={{
-                color: darkTheme ? "#ffffff" : "#000000", // Dynamic text color based on theme
-                textDecoration: "none",
-                fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" }, // Responsive font size
-                "&:hover": {
-                  color: darkTheme ? "#90caf9" : "#1976d2", // Hover effect
-                },
-              }}
+              to="/login" // Use `to` instead of `href`
+              style={{ textDecoration: "none" }} // Remove default underline
             >
-              Login
+              <CustomText
+                text="Login"
+                style={{
+                  color: darkTheme ? "#ffffff" : "#000000", // Dynamic text color based on theme
+                  fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" }, // Responsive font size
+                  "&:hover": {
+                    color: darkTheme ? "#90caf9" : "#1976d2", // Hover effect
+                  },
+                }}
+              />
             </Link>
             <CustomButton
               text="Sign Up"

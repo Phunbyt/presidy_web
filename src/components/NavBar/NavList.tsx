@@ -1,5 +1,7 @@
-import { Link, Stack } from "@mui/material";
+import { Stack, useTheme } from "@mui/material";
 import CustomButton from "../CustomButton/CustomButton";
+import { Link } from "react-router"; // Corrected import
+import CustomText from "../CustomText/CustomText";
 
 const pages = [
   { name: "Home", id: "/" },
@@ -9,6 +11,8 @@ const pages = [
 ];
 
 const NavList = () => {
+  const theme = useTheme();
+
   return (
     <Stack
       direction={{ xs: "column", sm: "row" }} // Stack vertically on small screens, row on larger screens
@@ -22,13 +26,18 @@ const NavList = () => {
       {pages.map((page) => (
         <Link
           key={page.id}
-          href={page.id}
-          sx={{
+          to={page.id}
+          style={{
             textDecoration: "none",
-            fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" }, // Responsive font size
+            color: theme.palette.text.primary, // Use theme color for text
           }}
         >
-          {page.name}
+          <CustomText
+            text={page.name}
+            style={{
+              fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" }, // Responsive font size
+            }}
+          />
         </Link>
       ))}
 
