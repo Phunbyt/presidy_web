@@ -8,6 +8,7 @@ import Home from "./pages/Home/Home";
 import Footer from "./components/Footer/Footer";
 import { BrowserRouter, Route, Routes } from "react-router";
 import Subscriptions from "./pages/Subscriptions/Subscriptions";
+import Support from "./pages/Support/Support";
 
 export default function App() {
   const { darkTheme, theme, toggleTheme } = useContext(GlobalContext);
@@ -20,6 +21,7 @@ export default function App() {
         <Routes>
           <Route path="/" Component={Home} />
           <Route path="/subscriptions" Component={Subscriptions} />
+          <Route path="/support" Component={Support} />
         </Routes>
 
         <Footer />
@@ -32,7 +34,9 @@ export default function App() {
         }}
       >
         <main>This app is using the {darkTheme ? "dark" : "light"} mode</main>
-        <Button onClick={toggleTheme}>Toggle theme</Button>
+        <Button sx={{ background: "orange" }} onClick={toggleTheme}>
+          Toggle theme
+        </Button>
       </Box>
     </ThemeProvider>
   );

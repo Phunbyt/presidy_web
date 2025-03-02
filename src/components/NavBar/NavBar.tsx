@@ -51,22 +51,24 @@ const NavBar = () => {
           }}
         >
           {/* Logo */}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
+          <Link href={"/"}>
             <Box
-              component="img"
-              src={presidyLogo}
-              alt="Presidy Logo"
               sx={{
-                height: { xs: "40px", sm: "50px", md: "60px" }, // Responsive logo size
-                width: "auto",
+                display: "flex",
+                alignItems: "center",
               }}
-            />
-          </Box>
+            >
+              <Box
+                component="img"
+                src={presidyLogo}
+                alt="Presidy Logo"
+                sx={{
+                  height: { xs: "40px", sm: "50px", md: "60px" }, // Responsive logo size
+                  width: "auto",
+                }}
+              />
+            </Box>
+          </Link>
 
           {/* Mobile Menu Icon */}
           <IconButton
@@ -78,7 +80,6 @@ const NavBar = () => {
           >
             <MenuIcon sx={{ fontSize: "2rem" }} /> {/* Responsive icon size */}
           </IconButton>
-
           {/* Mobile Drawer */}
           <Drawer
             open={open}
@@ -114,7 +115,6 @@ const NavBar = () => {
 
             <NavList />
           </Drawer>
-
           {/* Desktop Navigation Links */}
           <Stack
             direction="row"
@@ -141,7 +141,6 @@ const NavBar = () => {
               </Link>
             ))}
           </Stack>
-
           {/* Desktop Login and Sign Up */}
           <Stack
             direction="row"

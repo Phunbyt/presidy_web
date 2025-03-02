@@ -4,7 +4,7 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import XIcon from "@mui/icons-material/X";
-import { NavLink, useLocation } from "react-router";
+import { Link, NavLink, useLocation } from "react-router";
 import CustomButton from "../CustomButton/CustomButton";
 import CustomText from "../CustomText/CustomText";
 import { useEffect } from "react";
@@ -183,14 +183,16 @@ const Footer = () => {
                 maxWidth: { xs: "200px", sm: "250px", md: "300px" }, // Responsive button width
               }}
             >
-              <CustomButton
-                text={"Contact Us"}
-                sx={{
-                  width: "100%",
-                  padding: { xs: "8px 16px", sm: "12px 24px" }, // Responsive padding
-                  fontSize: { xs: "0.875rem", sm: "1rem" }, // Responsive font size
-                }}
-              />
+              <Link to={"/support"}>
+                <CustomButton
+                  text={"Contact Us"}
+                  sx={{
+                    width: "100%",
+                    padding: { xs: "8px 16px", sm: "12px 24px" }, // Responsive padding
+                    fontSize: { xs: "0.875rem", sm: "1rem" }, // Responsive font size
+                  }}
+                />
+              </Link>
             </Box>
           </Box>
         </Stack>

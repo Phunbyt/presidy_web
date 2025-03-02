@@ -7,6 +7,8 @@ import delivery from "./Delivery.svg";
 import lockedSecurity from "./LockedSecurity.svg";
 import noComments from "./NoComments.svg";
 import done from "./Done.svg";
+import messageSent from "./MessageSent.svg";
+import relationship from "./Relationship.svg";
 
 export {
   businessPlan,
@@ -18,4 +20,6 @@ export {
   lockedSecurity,
   noComments,
   done,
+  messageSent,
+  relationship,
 };
