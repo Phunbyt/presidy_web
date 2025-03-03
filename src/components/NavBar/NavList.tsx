@@ -42,14 +42,15 @@ const NavList = () => {
       ))}
 
       {/* Sign Up Button */}
-      <CustomButton
+      <Link to={"/signup"}>
+       <CustomButton
         text="Sign Up"
         sx={{
           maxWidth: { xs: "100px", sm: "120px", md: "150px" }, // Responsive button width
           padding: { xs: "0.5em 1em", sm: "0.8em 1.5em" }, // Responsive padding
           fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" }, // Responsive font size
         }}
-      />
+      /></Link>
     </Stack>
   );
 };
