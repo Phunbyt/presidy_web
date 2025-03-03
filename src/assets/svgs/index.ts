@@ -10,6 +10,8 @@ import done from "./Done.svg";
 import messageSent from "./MessageSent.svg";
 import relationship from "./Relationship.svg";
 import welcome from "./Welcome.svg";
+import noResults from "./NoResults.svg"
+import signIn from "./SignIn.svg";
 
 export {
   businessPlan,
@@ -24,4 +26,6 @@ export {
   messageSent,
   relationship,
   welcome,
+  noResults,
+  signIn,
 };

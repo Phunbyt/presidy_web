@@ -17,6 +17,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import AppleIcon from "@mui/icons-material/Apple";
 import countryList from "react-select-country-list";
 import { SetStateAction, useMemo, useState } from "react";
+import { Link } from "react-router";
 
 const SignUp = () => {
   const theme = useTheme();
@@ -177,14 +178,16 @@ const SignUp = () => {
               marginTop: { xs: "16px", sm: "24px", md: "32px" }, // Responsive margin
             }}
           >
-            <CustomButton
+                      <Link to={"/verify"}>
+                      
+                        <CustomButton
               text={"Sign Up"}
               sx={{
                 width: "100%",
                 padding: { xs: "8px 16px", sm: "12px 24px" }, // Responsive padding
                 fontSize: { xs: "0.875rem", sm: "1rem" }, // Responsive font size
               }}
-            />
+            /></Link>
           </Box>
 
           {/* Social Sign-Up Buttons */}

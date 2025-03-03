@@ -11,6 +11,8 @@ import Subscriptions from "./pages/Subscriptions/Subscriptions";
 import Support from "./pages/Support/Support";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
+import Verify from "./pages/Verify/Verify";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 
 
 export default function App() {
@@ -27,6 +29,8 @@ export default function App() {
           <Route path="/support" Component={Support} />
           <Route path="/login" Component={Login} />
           <Route path="/signup" Component={SignUp} />
+          <Route path="/verify" Component={Verify} />
+          <Route path="/forgot-password" Component={ForgotPassword} />
         </Routes>
 
         <Footer />
