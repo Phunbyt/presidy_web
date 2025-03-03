@@ -1,16 +1,11 @@
 import { Box, Container, Stack, TextField, useTheme } from "@mui/material";
 import CustomText from "../../components/CustomText/CustomText";
-import { relationship, signIn } from "../../assets/svgs";
+import { signIn } from "../../assets/svgs";
 import CustomButton from "../../components/CustomButton/CustomButton";
-import GoogleIcon from "@mui/icons-material/Google";
-import AppleIcon from "@mui/icons-material/Apple";
 import { Link } from "react-router";
-import { useContext } from "react";
-import { GlobalContext } from "../../context/GlobalContext";
 
 const ForgotPassword = () => {
   const theme = useTheme();
-  const { darkTheme } = useContext(GlobalContext);
 
   return (
     <Container
