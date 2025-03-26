@@ -4,11 +4,45 @@ import Slider from "react-slick";
 
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material"; // Import Material-UI icons for arrows
 
-import { plans } from "../../assets/svgs/test.plans";
 import PlanCard from "../../components/Plans/PlanCard";
+import { useContext, useState, useEffect } from "react";
+import { getAvailablePlans, getAPublicPlans } from "../../api/lib/plan";
+import { GlobalContext } from "../../context/GlobalContext";
 
 const Plans = () => {
   const theme = useTheme();
+  const { token } = useContext(GlobalContext);
+
+  interface SubscriptionPlan {
+    _id: {
+      $oid: string;
+    };
+    logoUrl: string;
+    name: string;
+    price: number;
+    currency: string;
+    country: string;
+    specialEmail: boolean;
+  }
+
+  const [availableSubscriptionsData, setAvailableSubscriptionsData] = useState<
+    SubscriptionPlan[]
+  >([]);
+
+  const handleAvailableSubscriptions = async () => {
+    if (token) {
+      const { data } = await getAvailablePlans({ token });
+      setAvailableSubscriptionsData(data);
+    } else {
+      const { data } = await getAPublicPlans();
+
+      setAvailableSubscriptionsData(data);
+    }
+  };
+
+  useEffect(() => {
+    handleAvailableSubscriptions();
+  }, []);
 
   // Custom arrow components
   const NextArrow = ({ onClick }: { onClick?: () => void }) => {
@@ -58,7 +92,7 @@ const Plans = () => {
   // Slider settings
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: availableSubscriptionsData.length > 3,
     speed: 500,
     slidesToShow: 3, // Default number of slides to show
     slidesToScroll: 1,
@@ -117,7 +151,7 @@ const Plans = () => {
         }}
       >
         <Slider {...settings}>
-          {plans.map((item, i) => (
+          {availableSubscriptionsData.map((item, i) => (
             <Box
               key={i} // Add a key for list rendering
               sx={{
@@ -125,11 +159,13 @@ const Plans = () => {
               }}
             >
               <PlanCard
+                _id={item._id}
                 logoUrl={item.logoUrl}
                 name={item.name}
                 price={item.price}
                 currency={item.currency}
                 country={item.country}
+                specialEmail={item.specialEmail}
               />
             </Box>
           ))}

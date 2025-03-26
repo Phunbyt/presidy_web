@@ -34,7 +34,7 @@ interface UserSubscriptionsProps {
 }
 
 const UserSubscriptions = ({
-  userSubscriptionsData,
+  userSubscriptionsData = [],
 }: UserSubscriptionsProps) => {
   const theme = useTheme();
 
@@ -86,7 +86,7 @@ const UserSubscriptions = ({
   // Slider settings
   const settings = {
     dots: true,
-    infinite: true,
+    infinite: userSubscriptionsData.length > 3,
     speed: 500,
     slidesToShow: 4, // Default number of slides to show
     slidesToScroll: 1,

@@ -1,5 +1,5 @@
 import { Box, Container, Stack, useTheme } from "@mui/material";
-import { presidyLogo } from "../../assets/images";
+import { lightLogo, presidyLogo } from "../../assets/images";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
@@ -7,11 +7,13 @@ import XIcon from "@mui/icons-material/X";
 import { Link, NavLink, useLocation } from "react-router";
 import CustomButton from "../CustomButton/CustomButton";
 import CustomText from "../CustomText/CustomText";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { GlobalContext } from "../../context/GlobalContext";
 
 const Footer = () => {
   const theme = useTheme();
   const location = useLocation();
+  const { darkTheme } = useContext(GlobalContext);
 
   const socialLinks = [
     { link: "http://", icon: <FacebookIcon /> },
@@ -70,7 +72,7 @@ const Footer = () => {
           >
             <Box
               component="img"
-              src={presidyLogo}
+              src={darkTheme ? lightLogo : presidyLogo}
               alt="Presidy Logo"
               sx={{
                 width: "100%",

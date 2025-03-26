@@ -1,5 +1,6 @@
 import { Box, Stack, useTheme } from "@mui/material";
 import CustomText from "../CustomText/CustomText";
+import { currencyFormatter } from "../../helpers/currency-formatter.helper";
 
 interface UserPlanCardProps {
   logoUrl: string;
@@ -80,7 +81,7 @@ const UserPlanCard = ({
         {/* Price and Currency */}
         <Stack direction="row" spacing={1} alignItems="baseline">
           <CustomText
-            text={`${price}`}
+            text={`${currencyFormatter(price)}`}
             style={{
               fontWeight: "bold",
               fontSize: { xs: "0.75rem", sm: "0.875rem", md: "1rem" }, // Smaller responsive font size

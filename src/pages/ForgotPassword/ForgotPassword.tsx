@@ -2,10 +2,52 @@ import { Box, Container, Stack, TextField, useTheme } from "@mui/material";
 import CustomText from "../../components/CustomText/CustomText";
 import { signIn } from "../../assets/svgs";
 import CustomButton from "../../components/CustomButton/CustomButton";
-import { Link } from "react-router";
+
+import { useContext, useState } from "react";
+import { sendResetOtp } from "../../api/lib/auth";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
+import { GlobalContext } from "../../context/GlobalContext";
 
 const ForgotPassword = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
+  const { handleForgotPasswordToken, handleTokenRoute } =
+    useContext(GlobalContext);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const handleEmail = (value: string) => {
+    setEmail(value);
+  };
+
+  const handleLogin = async () => {
+    setIsLoading(true);
+
+    if (!email) {
+      toast.error("Please enter your email and password");
+      setIsLoading(false);
+
+      return;
+    }
+
+    const { data } = await sendResetOtp({ email });
+
+    if (data?.status) {
+      handleForgotPasswordToken({
+        token: data.accessToken,
+        email: data.email,
+      });
+      handleTokenRoute("reset");
+      navigate("/verify");
+
+      setIsLoading(false);
+    }
+
+    setIsLoading(false);
+
+    return;
+  };
 
   return (
     <Container
@@ -76,6 +118,8 @@ const ForgotPassword = () => {
             sx={{
               marginBottom: { xs: "16px", sm: "24px", md: "32px" }, // Responsive margin
             }}
+            value={email}
+            onChange={(e) => handleEmail(e.target.value)}
           />
 
           {/* Log In Button */}
@@ -87,16 +131,18 @@ const ForgotPassword = () => {
               marginBottom: { xs: "16px", sm: "24px", md: "32px" }, // Responsive margin
             }}
           >
-            <Link to={"/verify"}>
-              <CustomButton
-                text={"Help me"}
-                sx={{
-                  width: "100%",
-                  padding: { xs: "8px 16px", sm: "12px 24px" }, // Responsive padding
-                  fontSize: { xs: "0.875rem", sm: "1rem" }, // Responsive font size
-                }}
-              />
-            </Link>
+            {/* <Link to={"/verify"}> */}
+            <CustomButton
+              text={"Help me"}
+              sx={{
+                width: "100%",
+                padding: { xs: "8px 16px", sm: "12px 24px" }, // Responsive padding
+                fontSize: { xs: "0.875rem", sm: "1rem" }, // Responsive font size
+              }}
+              onClick={handleLogin}
+              isLoading={isLoading}
+            />
+            {/* </Link> */}
           </Box>
         </Box>
       </Stack>

@@ -3,11 +3,14 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { GlobalContextProvider } from "./context/GlobalContext.tsx";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <GlobalContextProvider>
+  <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+    <StrictMode>
+      <GlobalContextProvider>
         <App />
-    </GlobalContextProvider>
-  </StrictMode>
+      </GlobalContextProvider>
+    </StrictMode>
+  </GoogleOAuthProvider>
 );

@@ -13,7 +13,12 @@ import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
 import Verify from "./pages/Verify/Verify";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
-
+import { ToastPopup } from "./components/Toast/Toast";
+import Transactions from "./pages/Transactions/Transactions";
+import TransactionsList from "./pages/Transactions/TransactionsList";
+import ProfilePage from "./pages/Profile/Profile";
+import ComingSoon from "./pages/ComingSoon/ComingSoon";
+import ChangePassword from "./pages/ChangePassword/ChangePassword";
 
 export default function App() {
   const { darkTheme, theme, toggleTheme } = useContext(GlobalContext);
@@ -30,11 +35,20 @@ export default function App() {
           <Route path="/login" Component={Login} />
           <Route path="/signup" Component={SignUp} />
           <Route path="/verify" Component={Verify} />
+          <Route path="/profile" Component={ProfilePage} />
+          <Route path="/transactions">
+            <Route index element={<TransactionsList />} />
+            <Route path="validate" element={<Transactions />} />
+          </Route>
+
           <Route path="/forgot-password" Component={ForgotPassword} />
+          <Route path="/change-password" Component={ChangePassword} />
+          <Route path="*" Component={ComingSoon} />
         </Routes>
 
         <Footer />
       </BrowserRouter>
+      <ToastPopup />
 
       <Box
         sx={{

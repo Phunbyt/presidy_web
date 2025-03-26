@@ -12,6 +12,8 @@ import relationship from "./Relationship.svg";
 import welcome from "./Welcome.svg";
 import noResults from "./NoResults.svg"
 import signIn from "./SignIn.svg";
+import bored from "./Bored.svg";
+import work from "./Work.svg";
 
 export {
   businessPlan,
@@ -28,4 +30,6 @@ export {
   welcome,
   noResults,
   signIn,
+  bored,
+  work,
 };

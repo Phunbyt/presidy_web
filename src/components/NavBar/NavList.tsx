@@ -2,16 +2,35 @@ import { Stack, useTheme } from "@mui/material";
 import CustomButton from "../CustomButton/CustomButton";
 import { Link } from "react-router"; // Corrected import
 import CustomText from "../CustomText/CustomText";
-
-const pages = [
-  { name: "Home", id: "/" },
-  { name: "Subscriptions", id: "subscriptions" },
-  { name: "Support", id: "support" },
-  { name: "Login", id: "login" },
-];
+import { useContext, useEffect, useState } from "react";
+import { GlobalContext } from "../../context/GlobalContext";
 
 const NavList = () => {
   const theme = useTheme();
+
+  const { user } = useContext(GlobalContext);
+
+  const basePages = [
+    { name: "Home", id: "/" },
+    { name: "Subscriptions", id: "subscriptions" },
+    { name: "Support", id: "support" },
+  ];
+
+  interface Page {
+    name: string;
+    id: string;
+  }
+
+  const getPages = (hasEmail: boolean): Page[] =>
+    hasEmail
+      ? [...basePages, { name: "Transactions", id: "transactions" }]
+      : [...basePages, { name: "Login", id: "login" }];
+
+  const [pages, setPages] = useState(() => getPages(Boolean(user.email)));
+
+  useEffect(() => {
+    setPages(getPages(Boolean(user.email)));
+  }, [user.email]);
 
   return (
     <Stack
@@ -42,15 +61,29 @@ const NavList = () => {
       ))}
 
       {/* Sign Up Button */}
-      <Link to={"/signup"}>
-       <CustomButton
-        text="Sign Up"
-        sx={{
-          maxWidth: { xs: "100px", sm: "120px", md: "150px" }, // Responsive button width
-          padding: { xs: "0.5em 1em", sm: "0.8em 1.5em" }, // Responsive padding
-          fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" }, // Responsive font size
-        }}
-      /></Link>
+      {!user.email ? (
+        <Link to={"/signup"}>
+          <CustomButton
+            text="Sign Up"
+            sx={{
+              maxWidth: { xs: "100px", sm: "120px", md: "150px" }, // Responsive button width
+              padding: { xs: "0.5em 1em", sm: "0.8em 1.5em" }, // Responsive padding
+              fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" }, // Responsive font size
+            }}
+          />
+        </Link>
+      ) : (
+        <Link to={"/profile"}>
+          <CustomButton
+            text="Profile"
+            sx={{
+              maxWidth: { xs: "100px", sm: "120px", md: "150px" }, // Responsive button width
+              padding: { xs: "0.5em 1em", sm: "0.8em 1.5em" }, // Responsive padding
+              fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" }, // Responsive font size
+            }}
+          />
+        </Link>
+      )}
     </Stack>
   );
 };

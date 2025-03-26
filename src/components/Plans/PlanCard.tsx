@@ -1,13 +1,24 @@
 import { Box, Stack, SxProps, Theme, useTheme } from "@mui/material";
 import CustomButton from "../CustomButton/CustomButton";
 import CustomText from "../CustomText/CustomText"; // Import CustomText component
+import { currencyFormatter } from "../../helpers/currency-formatter.helper";
+import { useContext, useState } from "react";
+import { GlobalContext } from "../../context/GlobalContext";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
+import BasicModal from "../Modal/Modal";
+import { subscribeToPlan } from "../../api/lib/plan";
 
 interface PlanCardProps {
+  _id: {
+    $oid: string;
+  };
   logoUrl: string;
   name: string;
   price: number;
   currency: string;
   country: string;
+  specialEmail: boolean;
   logoStyle?: SxProps<Theme>;
   headerTextStyle?: SxProps<Theme>;
   subTextStyle?: SxProps<Theme>;
@@ -16,11 +27,13 @@ interface PlanCardProps {
 }
 
 const PlanCard = ({
+  _id,
   logoUrl,
   name,
   price,
   currency,
   country,
+  specialEmail,
   logoStyle,
   headerTextStyle,
   subTextStyle,
@@ -28,6 +41,65 @@ const PlanCard = ({
   buttonStyle,
 }: PlanCardProps) => {
   const theme = useTheme();
+  const { user, token } = useContext(GlobalContext);
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isCardLoading, setIsCardLoading] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleEmail = (email: string) => setEmail(email);
+
+  const handleJoinPlan = async () => {
+    setIsLoading(true);
+
+    if (!user.email) {
+      toast.warn("Oops, you're not logged in!");
+
+      navigate("/login");
+
+      return;
+    }
+
+    const payload = {
+      email: email,
+      planId: _id,
+    };
+
+    const subscribed = await subscribeToPlan({ token, payload });
+    setIsLoading(false);
+    window.location.href = subscribed;
+  };
+
+  const handleCardClick = async () => {
+    setIsCardLoading(true);
+    if (!user.email) {
+      toast.warn("Oops, you're not logged in!");
+
+      navigate("/login");
+
+      return;
+    }
+
+    if (specialEmail) {
+      handleOpen();
+      setIsCardLoading(false);
+
+      return;
+    }
+
+    const payload = {
+      email: user.email,
+      planId: _id,
+    };
+
+    const subscribed = await subscribeToPlan({ token, payload });
+    setIsCardLoading(false);
+
+    window.location.href = subscribed;
+  };
 
   return (
     <Box
@@ -77,7 +149,7 @@ const PlanCard = ({
         {/* Price and Currency */}
         <Stack direction="row" spacing={1} alignItems="baseline">
           <CustomText
-            text={`${price}`}
+            text={`${currencyFormatter(price)}`}
             style={{
               fontWeight: "bold",
               fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2rem" }, // Responsive font size
@@ -113,9 +185,11 @@ const PlanCard = ({
             maxWidth: { xs: "200px", sm: "250px", md: "300px" }, // Responsive button width
             marginTop: { xs: "16px", sm: "24px", md: "32px" }, // Responsive margin
           }}
+          onClick={() => handleCardClick()}
         >
           <CustomButton
             text={"Join Now"}
+            isLoading={isCardLoading}
             sx={{
               width: "100%",
               padding: { xs: "8px 16px", sm: "12px 24px" }, // Responsive padding
@@ -125,6 +199,16 @@ const PlanCard = ({
           />
         </Box>
       </Stack>
+
+      <BasicModal
+        handleEmail={handleEmail}
+        email={email}
+        handleJoinPlan={handleJoinPlan}
+        isLoading={isLoading}
+        open={open}
+        planName={name}
+        handleClose={handleClose}
+      />
     </Box>
   );
 };

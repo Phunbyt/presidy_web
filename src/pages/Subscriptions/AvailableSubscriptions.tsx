@@ -133,11 +133,15 @@ const AvailableSubscriptions = ({
               {availableSubscriptionsData.map(
                 (
                   item: {
+                    _id: {
+                      $oid: string;
+                    };
                     logoUrl: string;
                     name: string;
                     price: number;
                     currency: string;
                     country: string;
+                    specialEmail: boolean;
                   },
                   index: Key | null | undefined
                 ) => (
@@ -150,11 +154,13 @@ const AvailableSubscriptions = ({
                       }}
                     >
                       <PlanCard
+                        _id={item._id}
                         logoUrl={item.logoUrl}
                         name={item.name}
                         price={item.price}
                         currency={item.currency}
                         country={item.country}
+                        specialEmail={item.specialEmail}
                         logoStyle={{
                           height: { xs: 30, sm: 50, md: 70 }, // Responsive logo size
                           width: { xs: 30, sm: 50, md: 70 }, // Responsive logo size

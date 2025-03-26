@@ -1,11 +1,6 @@
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
-import { createContext, useState } from "react";
-
-const GlobalContext = createContext({
-  darkTheme: true,
-  theme: createTheme(),
-  toggleTheme: () => {},
-});
+import { createContext, SetStateAction, useEffect, useState } from "react";
+import { ReactNode } from "react";
 
 const COLORS = {
   BLACK: "#101010",
@@ -13,10 +8,99 @@ const COLORS = {
   RED: "#abcde3",
 };
 
-import { ReactNode } from "react";
+// Define the user type for better type safety
+type User = {
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  country: string;
+  isVerified: boolean;
+  createdAt: string;
+};
+
+const GlobalContext = createContext({
+  darkTheme: true,
+  theme: createTheme(),
+  toggleTheme: () => {},
+  handleUser: (_e: any) => {},
+  handleToken: (_e: any) => {},
+  handleTokenRoute: (_e: any) => {},
+  logout: () => {},
+  handleForgotPasswordToken: (_e: any) => {},
+  user: {
+    firstName: "",
+    lastName: "",
+    username: "",
+    country: "",
+    email: "",
+    isVerified: false,
+    createdAt: "",
+  } as User,
+  token: "",
+  tokenRoute: "",
+  forgotPasswordToken: "",
+  forgotPasswordEmail: "",
+});
 
 const GlobalContextProvider = ({ children }: { children: ReactNode }) => {
   const [darkTheme, setDarkTheme] = useState(true);
+  const [forgotPasswordToken, setForgotPasswordToken] = useState("");
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState("");
+  const [isInitialized, setIsInitialized] = useState(false); // Track initialization
+
+  const [user, setUser] = useState<User>({
+    firstName: "",
+    lastName: "",
+    username: "",
+    country: "",
+    email: "",
+    isVerified: false,
+    createdAt: "",
+  });
+  const [token, setToken] = useState("");
+  const [tokenRoute, setTokenRoute] = useState("");
+
+  // Initialize state from sessionStorage before first render
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("user");
+    const storedToken = sessionStorage.getItem("token");
+
+    if (storedUser && storedUser !== "undefined") {
+      setUser(JSON.parse(storedUser));
+    }
+    if (storedToken && storedToken !== "undefined") {
+      setToken(storedToken);
+    }
+
+    setIsInitialized(true); // Mark initialization as complete
+  }, []);
+
+  const handleUser = (user: SetStateAction<User>) => {
+    const newUser = user;
+    sessionStorage.setItem("user", JSON.stringify(newUser));
+    setUser(newUser);
+  };
+
+  const handleToken = (token: SetStateAction<string>) => {
+    const newToken = token;
+    sessionStorage.setItem("token", JSON.stringify(newToken));
+    setToken(newToken);
+  };
+
+  const handleForgotPasswordToken = ({
+    token,
+    email,
+  }: {
+    token: string;
+    email: string;
+  }) => {
+    setForgotPasswordToken(token);
+    setForgotPasswordEmail(email);
+  };
+  const handleTokenRoute = (tokenRoute: SetStateAction<string>) => {
+    setTokenRoute(tokenRoute);
+  };
 
   const theme = responsiveFontSizes(
     createTheme({
@@ -29,12 +113,11 @@ const GlobalContextProvider = ({ children }: { children: ReactNode }) => {
           main: darkTheme ? COLORS.WHITE : COLORS.BLACK,
         },
       },
-
       components: {
         MuiLink: {
           styleOverrides: {
             root: {
-              color: darkTheme ? COLORS.WHITE : COLORS.BLACK, // Example colors
+              color: darkTheme ? COLORS.WHITE : COLORS.BLACK,
               textDecoration: "none",
               "&:hover": {
                 textDecoration: "underline",
@@ -45,7 +128,7 @@ const GlobalContextProvider = ({ children }: { children: ReactNode }) => {
         MuiButton: {
           styleOverrides: {
             root: {
-              color: darkTheme ? COLORS.WHITE : COLORS.BLACK, // Example colors
+              color: darkTheme ? COLORS.WHITE : COLORS.BLACK,
               outlineColor: darkTheme ? COLORS.WHITE : COLORS.BLACK,
               borderColor: darkTheme ? COLORS.WHITE : COLORS.BLACK,
             },
@@ -54,15 +137,14 @@ const GlobalContextProvider = ({ children }: { children: ReactNode }) => {
         MuiAppBar: {
           styleOverrides: {
             root: {
-              background: darkTheme ? COLORS.BLACK : COLORS.WHITE, // Example colors
+              background: darkTheme ? COLORS.BLACK : COLORS.WHITE,
             },
           },
         },
-
         MuiFormControlLabel: {
           styleOverrides: {
             root: {
-              color: darkTheme ? COLORS.WHITE : COLORS.BLACK, // Example colors
+              color: darkTheme ? COLORS.WHITE : COLORS.BLACK,
             },
           },
         },
@@ -72,12 +154,42 @@ const GlobalContextProvider = ({ children }: { children: ReactNode }) => {
 
   const toggleTheme = () => setDarkTheme((darkTheme) => !darkTheme);
 
+  const logout = () => {
+    setUser({
+      firstName: "",
+      lastName: "",
+      username: "",
+      country: "",
+      email: "",
+      isVerified: false,
+      createdAt: "",
+    });
+    setToken("");
+    setTokenRoute("");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+  };
+  // Don't render children until initialization is complete
+  if (!isInitialized) {
+    return null; // or a loading spinner
+  }
+
   return (
     <GlobalContext.Provider
       value={{
         darkTheme,
         theme,
         toggleTheme,
+        handleUser,
+        handleToken,
+        handleTokenRoute,
+        user,
+        token,
+        tokenRoute,
+        logout,
+        handleForgotPasswordToken,
+        forgotPasswordToken,
+        forgotPasswordEmail,
       }}
     >
       {children}
