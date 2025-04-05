@@ -1,8 +1,9 @@
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { TextField, useTheme } from "@mui/material";
+import { useTheme } from "@mui/material";
 import CustomText from "../CustomText/CustomText";
 import CustomButton from "../CustomButton/CustomButton";
+import CustomInputField from "../CustomInputField/CustomInputField";
 
 const style = {
   position: "absolute",
@@ -68,7 +69,7 @@ export default function BasicModal({
           />
 
           {/* Password Input Field */}
-          <TextField
+          <CustomInputField
             id="email"
             label={`Enter your ${planName.toUpperCase()} email here`}
             type="email"

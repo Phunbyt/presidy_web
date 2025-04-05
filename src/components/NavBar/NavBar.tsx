@@ -31,6 +31,8 @@ const NavBar = () => {
   ]);
 
   const toggleDrawer = (newOpen: boolean) => () => {
+    console.log({ open, newOpen });
+
     setOpen(newOpen);
   };
 
@@ -139,7 +141,7 @@ const NavBar = () => {
               </FormGroup>
             </Box>
 
-            <NavList />
+            <NavList toggleDrawer={setOpen} />
           </Drawer>
 
           {/* Desktop Navigation Links */}

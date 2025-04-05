@@ -6,7 +6,6 @@ import {
   MenuItem,
   Select,
   Stack,
-  TextField,
   useTheme,
 } from "@mui/material";
 import Grid from "@mui/material/Grid2"; // Keep the Grid import as is
@@ -24,6 +23,7 @@ import validator from "validator";
 import { GlobalContext } from "../../context/GlobalContext";
 import { useNavigate } from "react-router";
 import { useGoogleLogin } from "@react-oauth/google";
+import CustomInputField from "../../components/CustomInputField/CustomInputField";
 
 const SignUp = () => {
   const theme = useTheme();
@@ -183,9 +183,10 @@ const SignUp = () => {
             {/* Use Grid for paired inputs */}
             {/* First Name */}
             <Grid size={6}>
-              <TextField
+              <CustomInputField
                 id="firstName"
                 label="First Name"
+                type="text"
                 fullWidth
                 value={signUpData.firstName}
                 onChange={(e) => handleSignUpData(e.target.id, e.target.value)}
@@ -193,9 +194,10 @@ const SignUp = () => {
             </Grid>
             {/* Last Name */}
             <Grid size={6}>
-              <TextField
+              <CustomInputField
                 id="lastName"
                 label="Last Name"
+                type="text"
                 fullWidth
                 value={signUpData.lastName}
                 onChange={(e) => handleSignUpData(e.target.id, e.target.value)}
@@ -203,9 +205,10 @@ const SignUp = () => {
             </Grid>
             {/* Username */}
             <Grid size={6}>
-              <TextField
+              <CustomInputField
                 id="username"
                 label="Username"
+                type="text"
                 fullWidth
                 value={signUpData.username}
                 onChange={(e) => handleSignUpData(e.target.id, e.target.value)}
@@ -231,9 +234,10 @@ const SignUp = () => {
             </Grid>
             {/* Country Select */}
             <Grid size={12}>
-              <TextField
+              <CustomInputField
                 id="email"
                 label="Email"
+                type="email"
                 fullWidth
                 value={signUpData.email}
                 onChange={(e) => handleSignUpData(e.target.id, e.target.value)}
@@ -241,7 +245,7 @@ const SignUp = () => {
             </Grid>
             {/* Password */}
             <Grid size={6}>
-              <TextField
+              <CustomInputField
                 id="password"
                 label="Password"
                 type="password"
@@ -252,7 +256,7 @@ const SignUp = () => {
             </Grid>
             {/* Confirm Password */}
             <Grid size={6}>
-              <TextField
+              <CustomInputField
                 id="confirmPassword"
                 label="Confirm Password"
                 type="password"

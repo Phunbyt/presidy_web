@@ -9,11 +9,16 @@ import CustomButton from "../CustomButton/CustomButton";
 import CustomText from "../CustomText/CustomText";
 import { useContext, useEffect } from "react";
 import { GlobalContext } from "../../context/GlobalContext";
+import Grid from "@mui/material/Grid2"; // Keep the Grid import as is
 
 const Footer = () => {
   const theme = useTheme();
   const location = useLocation();
   const { darkTheme } = useContext(GlobalContext);
+
+  const handleLinkClick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" }); //scroll to the top of the page
+  };
 
   const socialLinks = [
     { link: "http://", icon: <FacebookIcon /> },
@@ -50,167 +55,178 @@ const Footer = () => {
   return (
     <Box
       sx={{
-        backgroundColor: theme.palette.background.paper, // Use theme background color
-        padding: { xs: "24px", sm: "32px", md: "48px" }, // Responsive padding
+        backgroundColor: theme.palette.background.paper,
+        padding: { xs: "24px", sm: "32px", md: "48px" },
       }}
     >
       <Container maxWidth="lg">
-        <Stack
-          direction={{ xs: "column", md: "row" }} // Stack vertically on small screens, horizontally on larger screens
-          spacing={{ xs: 4, sm: 6, md: 8 }} // Responsive spacing
-          justifyContent="space-between" // Space out the sections
-          alignItems={{ xs: "center", md: "flex-start" }} // Center align on small screens
+        <Grid
+          container
+          sx={{ justifyContent: "space-between" }}
+          spacing={{ xs: 4, sm: 6, md: 4 }}
         >
-          {/* Logo and Social Links */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: { xs: "center", md: "flex-start" }, // Center on small screens
-              gap: 2, // Spacing between logo and social links
-            }}
-          >
-            <Box
-              component="img"
-              src={darkTheme ? lightLogo : presidyLogo}
-              alt="Presidy Logo"
-              sx={{
-                width: "100%",
-                maxWidth: "200px", // Responsive logo size
-                height: "auto",
-              }}
-            />
-            <Stack direction="row" spacing={2}>
-              {socialLinks.map((item, index) => (
-                <NavLink
-                  key={index} // Add a key for list rendering
-                  to={item.link}
-                  style={{
-                    textDecoration: "none",
-                    color: theme.palette.text.secondary, // Use theme color for icons
-                  }}
-                >
-                  {item.icon}
-                </NavLink>
-              ))}
-            </Stack>
-          </Box>
-
-          {/* Quick Links Section */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: { xs: "center", md: "flex-start" }, // Center on small screens
-              gap: 2, // Spacing between items
-            }}
-          >
-            <CustomText
-              text={"Quick Links"}
-              style={{
-                fontWeight: "bold",
-                fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.75rem" }, // Responsive font size
-                color: theme.palette.text.primary, // Use theme color for text
-              }}
-            />
-            <Stack spacing={1}>
-              {quickLinks.map((link, index) => (
-                <NavLink
-                  key={index}
-                  to={link.link}
-                  style={{
-                    textDecoration: "none",
-                    color: theme.palette.text.secondary, // Use theme color for links
-                  }}
-                >
-                  <CustomText text={link.name} />
-                </NavLink>
-              ))}
-            </Stack>
-          </Box>
-
-          {/* Resources Section */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: { xs: "center", md: "flex-start" }, // Center on small screens
-              gap: 2, // Spacing between items
-            }}
-          >
-            <CustomText
-              text={"Resources"}
-              style={{
-                fontWeight: "bold",
-                fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.75rem" }, // Responsive font size
-                color: theme.palette.text.primary, // Use theme color for text
-              }}
-            />
-            <Stack spacing={1}>
-              {resources.map((resource, index) => (
-                <NavLink
-                  key={index}
-                  to={resource.link}
-                  style={{
-                    textDecoration: "none",
-                    color: theme.palette.text.secondary, // Use theme color for links
-                  }}
-                >
-                  <CustomText text={resource.name} />
-                </NavLink>
-              ))}
-            </Stack>
-          </Box>
-
-          {/* Customer Service Section */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: { xs: "center", md: "flex-start" }, // Center on small screens
-              gap: 2, // Spacing between text and button
-            }}
-          >
-            <CustomText
-              text={"Customer Service"}
-              style={{
-                fontWeight: "bold",
-                fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.75rem" }, // Responsive font size
-                color: theme.palette.text.primary, // Use theme color for text
-              }}
-            />
+          {/* Logo and Social Links - First column */}
+          <Grid sx={{}} size={{ xs: 6, md: 3 }}>
             <Box
               sx={{
-                width: "100%",
-                maxWidth: { xs: "200px", sm: "250px", md: "300px" }, // Responsive button width
+                display: "flex",
+                flexDirection: "column",
+                alignItems: { xs: "flex-start", md: "flex-start" },
+                gap: 2,
               }}
             >
-              <Link to={"/support"}>
-                <CustomButton
-                  text={"Contact Us"}
-                  sx={{
-                    width: "100%",
-                    padding: { xs: "8px 16px", sm: "12px 24px" }, // Responsive padding
-                    fontSize: { xs: "0.875rem", sm: "1rem" }, // Responsive font size
-                  }}
-                />
-              </Link>
+              <Box
+                component="img"
+                src={darkTheme ? lightLogo : presidyLogo}
+                alt="Presidy Logo"
+                sx={{
+                  width: "100%",
+                  maxWidth: "200px",
+                  height: "auto",
+                }}
+              />
+              <Stack
+                direction="row"
+                spacing={{ xs: 1, sm: 1.5, md: 2, lg: 2.5 }}
+              >
+                {socialLinks.map((item, index) => (
+                  <NavLink
+                    key={index}
+                    to={item.link}
+                    onClick={handleLinkClick}
+                    style={{
+                      textDecoration: "none",
+                      color: theme.palette.text.secondary,
+                    }}
+                  >
+                    {item.icon}
+                  </NavLink>
+                ))}
+              </Stack>
             </Box>
-          </Box>
-        </Stack>
+          </Grid>
 
-        {/* Footer Bottom (Optional) */}
+          {/* Quick Links Section - Second column */}
+          <Grid sx={{}} size={{ xs: 6, md: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: { xs: "flex-start", md: "flex-start" },
+                gap: 2,
+              }}
+            >
+              <CustomText
+                text={"Quick Links"}
+                style={{
+                  fontWeight: "bold",
+                  fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.75rem" },
+                  color: theme.palette.text.primary,
+                }}
+              />
+              <Stack spacing={1}>
+                {quickLinks.map((link, index) => (
+                  <NavLink
+                    key={index}
+                    to={link.link}
+                    style={{
+                      textDecoration: "none",
+                      color: theme.palette.text.secondary,
+                    }}
+                  >
+                    <CustomText text={link.name} />
+                  </NavLink>
+                ))}
+              </Stack>
+            </Box>
+          </Grid>
+
+          {/* Resources Section - Third column */}
+          <Grid sx={{}} size={{ xs: 6, md: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: { xs: "flex-start", md: "flex-start" },
+                gap: 2,
+              }}
+            >
+              <CustomText
+                text={"Resources"}
+                style={{
+                  fontWeight: "bold",
+                  fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.75rem" },
+                  color: theme.palette.text.primary,
+                }}
+              />
+              <Stack spacing={1}>
+                {resources.map((resource, index) => (
+                  <NavLink
+                    key={index}
+                    to={resource.link}
+                    style={{
+                      textDecoration: "none",
+                      color: theme.palette.text.secondary,
+                    }}
+                  >
+                    <CustomText text={resource.name} />
+                  </NavLink>
+                ))}
+              </Stack>
+            </Box>
+          </Grid>
+
+          {/* Customer Service Section - Fourth column */}
+          <Grid sx={{}} size={{ xs: 6, md: 3 }}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: { xs: "flex-start", md: "flex-start" },
+                gap: 2,
+              }}
+            >
+              <CustomText
+                text={"Customer Service"}
+                style={{
+                  fontWeight: "bold",
+                  fontSize: { xs: "1.25rem", sm: "1.5rem", md: "1.75rem" },
+                  color: theme.palette.text.primary,
+                }}
+              />
+              <Box
+                sx={{
+                  width: "100%",
+                  maxWidth: { xs: "200px", sm: "250px", md: "300px" },
+                }}
+              >
+                <Link to={"/support"}>
+                  <CustomButton
+                    text={"Contact Us"}
+                    sx={{
+                      width: "100%",
+                      padding: { xs: "8px 16px", sm: "12px 24px" },
+                      fontSize: { xs: "0.875rem", sm: "1rem" },
+                    }}
+                  />
+                </Link>
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
+
+        {/* Footer Bottom */}
         <Box
           sx={{
-            marginTop: { xs: "24px", sm: "32px", md: "48px" }, // Responsive margin
+            marginTop: { xs: "24px", sm: "32px", md: "48px" },
             textAlign: "center",
-            color: theme.palette.text.secondary, // Use theme color for text
+            color: theme.palette.text.secondary,
           }}
         >
           <CustomText
             text={"© 2024 Presidy. All rights reserved."}
             style={{
-              fontSize: { xs: "0.875rem", sm: "1rem" }, // Responsive font size
+              fontSize: { xs: "0.875rem", sm: "1rem" },
             }}
           />
         </Box>

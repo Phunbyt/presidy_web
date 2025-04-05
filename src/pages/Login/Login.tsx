@@ -1,4 +1,4 @@
-import { Box, Container, Stack, TextField, useTheme } from "@mui/material";
+import { Box, Container, Stack, useTheme } from "@mui/material";
 import CustomText from "../../components/CustomText/CustomText";
 import { relationship } from "../../assets/svgs";
 import CustomButton from "../../components/CustomButton/CustomButton";
@@ -11,6 +11,13 @@ import { toast } from "react-toastify";
 import { googleSignIn, sendExistingUserOtp, signin } from "../../api/lib/auth";
 import { useNavigate } from "react-router";
 import { useGoogleLogin } from "@react-oauth/google";
+import CustomInputField from "../../components/CustomInputField/CustomInputField";
+
+const COLORS = {
+  BLACK: "#101010",
+  WHITE: "#f0f0f0",
+  RED: "#abcde3",
+};
 
 const Login = () => {
   const theme = useTheme();
@@ -149,9 +156,10 @@ const Login = () => {
           />
 
           {/* Email Input Field */}
-          <TextField
+          <CustomInputField
             id="email"
             label="Enter your email here"
+            type={"email"}
             fullWidth
             sx={{
               marginBottom: { xs: "16px", sm: "24px", md: "32px" }, // Responsive margin
@@ -161,13 +169,19 @@ const Login = () => {
           />
 
           {/* Password Input Field */}
-          <TextField
+          <CustomInputField
             id="password"
             label="Enter your password here"
             type="password"
             fullWidth
             sx={{
               marginBottom: { xs: "16px", sm: "24px", md: "32px" }, // Responsive margin
+              "& .MuiOutlinedInput-input": {
+                "&:-webkit-autofill": {
+                  "-webkit-box-shadow": `0 0 0 100px ${theme.palette.background.paper} inset`,
+                  "-webkit-text-fill-color": theme.palette.text.primary,
+                },
+              },
             }}
             value={loginData.password}
             onChange={(e) => handleLoginData(e.target.id, e.target.value)}

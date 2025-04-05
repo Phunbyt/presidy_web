@@ -43,6 +43,7 @@ export default function App() {
 
           <Route path="/forgot-password" Component={ForgotPassword} />
           <Route path="/change-password" Component={ChangePassword} />
+          <Route path="/coming" Component={ComingSoon} />
           <Route path="*" Component={ComingSoon} />
         </Routes>
 

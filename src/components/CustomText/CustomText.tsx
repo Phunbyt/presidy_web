@@ -5,12 +5,14 @@ interface CustomTextProps {
   style?: SxProps<Theme>;
   variant?: "h1" | "body1";
   component?: "h1" | "p";
+  onClick?: () => void;
 }
 const CustomText = ({
   text,
   style,
   variant = "body1",
   component = "p",
+  onClick,
 }: CustomTextProps) => {
   return (
     <Typography
@@ -18,6 +20,7 @@ const CustomText = ({
       gutterBottom
       component={component}
       sx={{ ...style }}
+      onClick={onClick}
     >
       {text}
     </Typography>

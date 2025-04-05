@@ -1,4 +1,4 @@
-import { Box, Container, Stack, TextField, useTheme } from "@mui/material";
+import { Box, Container, Stack, useTheme } from "@mui/material";
 import CustomText from "../../components/CustomText/CustomText";
 import { noResults } from "../../assets/svgs";
 import CustomButton from "../../components/CustomButton/CustomButton";
@@ -10,6 +10,7 @@ import validator from "validator";
 
 import { verifyOtp } from "../../api/lib/auth";
 import { useNavigate } from "react-router";
+import CustomInputField from "../../components/CustomInputField/CustomInputField";
 
 const Verify = () => {
   const theme = useTheme();
@@ -180,7 +181,7 @@ const Verify = () => {
           />
 
           {/* Password Input Field */}
-          <TextField
+          <CustomInputField
             id="otp"
             label="Enter your OTP here"
             type="text"

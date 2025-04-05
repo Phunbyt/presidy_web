@@ -1,4 +1,4 @@
-import { Box, Container, Stack, TextField, useTheme } from "@mui/material";
+import { Box, Container, Stack, useTheme } from "@mui/material";
 import CustomText from "../../components/CustomText/CustomText";
 import { messageSent } from "../../assets/svgs";
 import CustomButton from "../../components/CustomButton/CustomButton";
@@ -7,6 +7,7 @@ import { GlobalContext } from "../../context/GlobalContext";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import { sendSupportMessage } from "../../api/lib/plan";
+import CustomInputField from "../../components/CustomInputField/CustomInputField";
 
 const Support = () => {
   const theme = useTheme();
@@ -123,7 +124,7 @@ const Support = () => {
           {/* Message Input Field */}
 
           {!user.email && (
-            <TextField
+            <CustomInputField
               id="email"
               label="Enter your email here"
               fullWidth
@@ -132,10 +133,11 @@ const Support = () => {
               }}
               value={supportMessasgeData.email}
               onChange={(e) => handleMessageData(e.target.id, e.target.value)}
+              type={"email"}
             />
           )}
 
-          <TextField
+          <CustomInputField
             id="message"
             label="Enter your message here"
             multiline
@@ -148,6 +150,7 @@ const Support = () => {
             helperText={`${remainingMessasgeString}/${messageLength}`}
             value={supportMessasgeData.message}
             onChange={(e) => handleMessageData(e.target.id, e.target.value)}
+            type={"text"}
           />
 
           {/* Send Message Button */}

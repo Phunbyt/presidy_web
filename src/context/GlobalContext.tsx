@@ -1,4 +1,8 @@
-import { createTheme, responsiveFontSizes } from "@mui/material/styles";
+import {
+  createTheme,
+  responsiveFontSizes,
+  useTheme,
+} from "@mui/material/styles";
 import { createContext, SetStateAction, useEffect, useState } from "react";
 import { ReactNode } from "react";
 
@@ -61,10 +65,10 @@ const GlobalContextProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState("");
   const [tokenRoute, setTokenRoute] = useState("");
 
-  // Initialize state from sessionStorage before first render
+  // Initialize state from localStorage before first render
   useEffect(() => {
-    const storedUser = sessionStorage.getItem("user");
-    const storedToken = sessionStorage.getItem("token");
+    const storedUser = localStorage.getItem("user");
+    const storedToken = localStorage.getItem("token");
 
     if (storedUser && storedUser !== "undefined") {
       setUser(JSON.parse(storedUser));
@@ -78,13 +82,13 @@ const GlobalContextProvider = ({ children }: { children: ReactNode }) => {
 
   const handleUser = (user: SetStateAction<User>) => {
     const newUser = user;
-    sessionStorage.setItem("user", JSON.stringify(newUser));
+    localStorage.setItem("user", JSON.stringify(newUser));
     setUser(newUser);
   };
 
   const handleToken = (token: SetStateAction<string>) => {
     const newToken = token;
-    sessionStorage.setItem("token", JSON.stringify(newToken));
+    localStorage.setItem("token", JSON.stringify(newToken));
     setToken(newToken);
   };
 
@@ -166,8 +170,8 @@ const GlobalContextProvider = ({ children }: { children: ReactNode }) => {
     });
     setToken("");
     setTokenRoute("");
-    sessionStorage.removeItem("user");
-    sessionStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
   };
   // Don't render children until initialization is complete
   if (!isInitialized) {

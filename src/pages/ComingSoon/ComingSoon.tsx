@@ -19,6 +19,7 @@ const ComingSoon = () => {
           padding: { xs: "16px", sm: "24px", md: "32px" }, // Responsive padding
           alignItems: "center", // Center content vertically
         }}
+        id={"#coming"}
       >
         {/* Left Section (Text Content) */}
         <Box

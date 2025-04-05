@@ -1,4 +1,4 @@
-import { Box, Container, Stack, TextField, useTheme } from "@mui/material";
+import { Box, Container, Stack, useTheme } from "@mui/material";
 import CustomText from "../../components/CustomText/CustomText";
 import { work } from "../../assets/svgs";
 import CustomButton from "../../components/CustomButton/CustomButton";
@@ -7,6 +7,7 @@ import { GlobalContext } from "../../context/GlobalContext";
 import { toast } from "react-toastify";
 import { resetPassword } from "../../api/lib/auth";
 import { useNavigate } from "react-router";
+import CustomInputField from "../../components/CustomInputField/CustomInputField";
 
 const ChangePassword = () => {
   const theme = useTheme();
@@ -119,9 +120,10 @@ const ChangePassword = () => {
           />
 
           {/* Email Input Field */}
-          <TextField
+          <CustomInputField
             id="confirmPassword"
             label="Enter your password here"
+            type="text"
             fullWidth
             sx={{
               marginBottom: { xs: "16px", sm: "24px", md: "32px" }, // Responsive margin
@@ -131,8 +133,9 @@ const ChangePassword = () => {
           />
 
           {/* Password Input Field */}
-          <TextField
+          <CustomInputField
             id="password"
+            type="text"
             label="Confirm your password here"
             fullWidth
             sx={{
