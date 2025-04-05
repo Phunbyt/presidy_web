@@ -13,12 +13,6 @@ import { useNavigate } from "react-router";
 import { useGoogleLogin } from "@react-oauth/google";
 import CustomInputField from "../../components/CustomInputField/CustomInputField";
 
-const COLORS = {
-  BLACK: "#101010",
-  WHITE: "#f0f0f0",
-  RED: "#abcde3",
-};
-
 const Login = () => {
   const theme = useTheme();
   const { darkTheme, handleUser, handleToken, handleTokenRoute } =

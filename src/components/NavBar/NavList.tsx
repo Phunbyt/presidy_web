@@ -1,6 +1,6 @@
 import { Stack, useTheme } from "@mui/material";
 import CustomButton from "../CustomButton/CustomButton";
-import { Link, To, useNavigate } from "react-router"; // Corrected import
+import { To, useNavigate } from "react-router"; // Corrected import
 import CustomText from "../CustomText/CustomText";
 import { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../context/GlobalContext";

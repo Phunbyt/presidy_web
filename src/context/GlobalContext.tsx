@@ -1,8 +1,4 @@
-import {
-  createTheme,
-  responsiveFontSizes,
-  useTheme,
-} from "@mui/material/styles";
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import { createContext, SetStateAction, useEffect, useState } from "react";
 import { ReactNode } from "react";
 
