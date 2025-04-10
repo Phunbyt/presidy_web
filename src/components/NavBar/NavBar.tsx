@@ -25,14 +25,12 @@ const NavBar = () => {
   const { darkTheme, toggleTheme, user } = useContext(GlobalContext);
   const [open, setOpen] = useState(false);
   const [pages, setPages] = useState([
-    { name: "About", id: "/#about" },
+    // { name: "About", id: "/#about" },
     { name: "Subscriptions", id: "subscriptions" },
     { name: "Support", id: "support" },
   ]);
 
   const toggleDrawer = (newOpen: boolean) => () => {
-    console.log({ open, newOpen });
-
     setOpen(newOpen);
   };
 
@@ -49,6 +47,16 @@ const NavBar = () => {
       );
     }
   }, [user.email]); // No longer need pages in dependency array
+
+  useEffect(() => {
+    if (user.isModerator) {
+      setPages((prevPages) =>
+        prevPages.some((page) => page.id === "moderator")
+          ? prevPages
+          : [...prevPages, { name: "Moderator", id: "moderator" }]
+      );
+    }
+  }, [user.isModerator]);
 
   return (
     <AppBar

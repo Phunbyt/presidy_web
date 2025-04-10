@@ -5,11 +5,12 @@ import { ChangeEvent } from "react";
 interface CustomInputFieldProps {
   id: string;
   label: string;
-  type: string;
+  type?: string;
   fullWidth: boolean;
   sx?: object;
   value: string;
   multiline?: boolean;
+  required?: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   rows?: number;
   slotProps?: object;
@@ -19,9 +20,10 @@ interface CustomInputFieldProps {
 const CustomInputField: React.FC<CustomInputFieldProps> = ({
   id,
   label,
-  type,
+  type = "text",
   fullWidth,
   multiline,
+  required,
   rows,
   sx,
   value,
@@ -38,6 +40,7 @@ const CustomInputField: React.FC<CustomInputFieldProps> = ({
       type={type}
       fullWidth={fullWidth}
       multiline={multiline}
+      required={required}
       rows={rows}
       helperText={helperText}
       slotProps={{ ...slotProps }}
@@ -49,6 +52,7 @@ const CustomInputField: React.FC<CustomInputFieldProps> = ({
             "-webkit-text-fill-color": theme.palette.text.primary,
           },
         },
+        
       }}
       value={value}
       onChange={onChange}

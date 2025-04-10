@@ -34,8 +34,6 @@ const NavList = ({
   const [pages, setPages] = useState(() => getPages(Boolean(user.email)));
 
   const handleNavigation = (key: To) => {
-    console.log("here....");
-
     navigate(key);
     toggleDrawer(false);
   };
@@ -43,6 +41,16 @@ const NavList = ({
   useEffect(() => {
     setPages(getPages(Boolean(user.email)));
   }, [user.email]);
+
+  useEffect(() => {
+    if (user.isModerator) {
+      setPages((prevPages) =>
+        prevPages.some((page) => page.id === "moderator")
+          ? prevPages
+          : [...prevPages, { name: "Moderator", id: "moderator" }]
+      );
+    }
+  }, [user.isModerator]);
 
   return (
     <Stack

@@ -68,9 +68,30 @@ const PlanCard = ({
       planId: _id,
     };
 
-    const subscribed = await subscribeToPlan({ token, payload });
+    const { canBeModerator, paymentLink, error } = await subscribeToPlan({
+      token,
+      payload,
+    });
     setIsLoading(false);
-    window.location.href = subscribed;
+
+    if (error) {
+      toast.error(error.message);
+
+      return;
+    }
+    if (canBeModerator) {
+      toast.success("Family is unavailable but You can be a moderator!");
+      navigate("/moderator");
+      return;
+    }
+    if (!paymentLink) {
+      toast.error("Oops, something went wrong!");
+      return;
+    }
+    toast.success("Redirecting to payment page...");
+    // Redirect to the payment link
+
+    window.location.href = paymentLink;
   };
 
   const handleCardClick = async () => {
@@ -95,10 +116,30 @@ const PlanCard = ({
       planId: _id,
     };
 
-    const subscribed = await subscribeToPlan({ token, payload });
+    const { canBeModerator, paymentLink, error } = await subscribeToPlan({
+      token,
+      payload,
+    });
     setIsCardLoading(false);
 
-    window.location.href = subscribed;
+    if (error) {
+      toast.error(error.message);
+
+      return;
+    }
+    if (canBeModerator) {
+      toast.success("Family is unavailable but You can be a moderator!");
+      navigate("/moderator");
+      return;
+    }
+    if (!paymentLink) {
+      toast.error("Oops, something went wrong!");
+      return;
+    }
+    toast.success("Redirecting to payment page...");
+    // Redirect to the payment link
+
+    window.location.href = paymentLink;
   };
 
   return (

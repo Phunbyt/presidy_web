@@ -16,6 +16,7 @@ type User = {
   email: string;
   country: string;
   isVerified: boolean;
+  isModerator: boolean;
   createdAt: string;
 };
 
@@ -35,6 +36,7 @@ const GlobalContext = createContext({
     country: "",
     email: "",
     isVerified: false,
+    isModerator: false,
     createdAt: "",
   } as User,
   token: "",
@@ -56,6 +58,7 @@ const GlobalContextProvider = ({ children }: { children: ReactNode }) => {
     country: "",
     email: "",
     isVerified: false,
+    isModerator: false,
     createdAt: "",
   });
   const [token, setToken] = useState("");
@@ -70,7 +73,7 @@ const GlobalContextProvider = ({ children }: { children: ReactNode }) => {
       setUser(JSON.parse(storedUser));
     }
     if (storedToken && storedToken !== "undefined") {
-      setToken(storedToken);
+      setToken(JSON.parse(storedToken));
     }
 
     setIsInitialized(true); // Mark initialization as complete
@@ -162,6 +165,7 @@ const GlobalContextProvider = ({ children }: { children: ReactNode }) => {
       country: "",
       email: "",
       isVerified: false,
+      isModerator: false,
       createdAt: "",
     });
     setToken("");

@@ -19,6 +19,8 @@ import TransactionsList from "./pages/Transactions/TransactionsList";
 import ProfilePage from "./pages/Profile/Profile";
 import ComingSoon from "./pages/ComingSoon/ComingSoon";
 import ChangePassword from "./pages/ChangePassword/ChangePassword";
+import Moderator from "./pages/Moderator/Moderator";
+import ModeratorDashboard from "./pages/ModeratorDashboard/ModeratorDashboard";
 
 export default function App() {
   const { darkTheme, theme, toggleTheme } = useContext(GlobalContext);
@@ -36,6 +38,8 @@ export default function App() {
           <Route path="/signup" Component={SignUp} />
           <Route path="/verify" Component={Verify} />
           <Route path="/profile" Component={ProfilePage} />
+          <Route path="/moderator" Component={Moderator} />
+          <Route path="/moderator-dashboard" Component={ModeratorDashboard} />
           <Route path="/transactions">
             <Route index element={<TransactionsList />} />
             <Route path="validate" element={<Transactions />} />

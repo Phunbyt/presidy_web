@@ -6,7 +6,10 @@ interface TransactionParams {
   txRef: string;
 }
 
-export const getOneTransaction = async ({ token, txRef }: TransactionParams) => {
+export const getOneTransaction = async ({
+  token,
+  txRef,
+}: TransactionParams) => {
   try {
     const { data } = await axiosClient.get(
       `transactions/single?txRef=${txRef}`,

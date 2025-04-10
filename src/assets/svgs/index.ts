@@ -1,4 +1,5 @@
 import businessPlan from "./BusinessPlan.svg";
+import sittingLady from "./BusinessPlans.svg";
 import downloading from "./Downloading.svg";
 import musicCelebrate from "./MusicCelebrate.svg";
 import searchingLooking from "./SearchingLooking.svg";
@@ -14,6 +15,8 @@ import noResults from "./NoResults.svg"
 import signIn from "./SignIn.svg";
 import bored from "./Bored.svg";
 import work from "./Work.svg";
+import painter from "./Painter.svg";
+import sports from "./Sports.svg";
 
 export {
   businessPlan,
@@ -32,4 +35,7 @@ export {
   signIn,
   bored,
   work,
+  sittingLady,
+  painter,
+  sports,
 };

@@ -21,10 +21,22 @@ const Footer = () => {
   };
 
   const socialLinks = [
-    { link: "http://", icon: <FacebookIcon /> },
-    { link: "http://", icon: <InstagramIcon /> },
-    { link: "http://", icon: <LinkedInIcon /> },
-    { link: "http://", icon: <XIcon /> },
+    {
+      link: "https://www.instagram.com/thepresidyapp?igsh=OHFjOHBhbXRmeWF4",
+      icon: <FacebookIcon />,
+    },
+    {
+      link: "https://www.instagram.com/thepresidyapp?igsh=OHFjOHBhbXRmeWF4",
+      icon: <InstagramIcon />,
+    },
+    {
+      link: "https://www.instagram.com/thepresidyapp?igsh=OHFjOHBhbXRmeWF4",
+      icon: <LinkedInIcon />,
+    },
+    {
+      link: "https://www.instagram.com/thepresidyapp?igsh=OHFjOHBhbXRmeWF4",
+      icon: <XIcon />,
+    },
   ];
 
   const quickLinks = [

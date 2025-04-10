@@ -42,17 +42,6 @@ export const getUserPlans = async ({ token }: { token: string }) => {
   }
 };
 
-export const joinPlan = async (payload: Record<string, string>) => {
-  try {
-    const { data } = await axiosClient.post(`plan/join`, payload);
-
-    return data;
-  } catch (error: any) {
-    toast.error(error.response.data.message);
-    return { error: true, message: error.response.data.message };
-  }
-};
-
 export const subscribeToPlan = async ({
   token,
   payload,
@@ -67,7 +56,7 @@ export const subscribeToPlan = async ({
       },
     });
 
-    return data.data.paymentLink;
+    return data.data;
   } catch (error: any) {
     toast.error(error.response.data.message);
     return { error: true, message: error.response.data.message };

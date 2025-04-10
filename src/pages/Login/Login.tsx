@@ -38,7 +38,13 @@ const Login = () => {
       return;
     }
 
-    const { data } = await signin(loginData);
+    const { data, error } = await signin(loginData);
+
+    if (error) {
+      setIsLoading(false);
+
+      return;
+    }
 
     handleUser(data.existingUser);
     handleToken(data.accessToken);
@@ -170,12 +176,6 @@ const Login = () => {
             fullWidth
             sx={{
               marginBottom: { xs: "16px", sm: "24px", md: "32px" }, // Responsive margin
-              "& .MuiOutlinedInput-input": {
-                "&:-webkit-autofill": {
-                  "-webkit-box-shadow": `0 0 0 100px ${theme.palette.background.paper} inset`,
-                  "-webkit-text-fill-color": theme.palette.text.primary,
-                },
-              },
             }}
             value={loginData.password}
             onChange={(e) => handleLoginData(e.target.id, e.target.value)}
