@@ -12,6 +12,7 @@ import { googleSignIn, sendExistingUserOtp, signin } from "../../api/lib/auth";
 import { useNavigate } from "react-router";
 import { useGoogleLogin } from "@react-oauth/google";
 import CustomInputField from "../../components/CustomInputField/CustomInputField";
+import validator from "validator";
 
 const Login = () => {
   const theme = useTheme();
@@ -33,6 +34,13 @@ const Login = () => {
 
     if (!loginData.email || !loginData.password) {
       toast.error("Please enter your email and password");
+      setIsLoading(false);
+
+      return;
+    }
+
+    if (!validator.isEmail(loginData.email)) {
+      toast.error("Please enter a valid email");
       setIsLoading(false);
 
       return;
