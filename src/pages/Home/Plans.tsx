@@ -36,6 +36,8 @@ const Plans = () => {
     } else {
       const { data } = await getAPublicPlans();
 
+      console.log('getAPublicPlans..............',data)
+
       setAvailableSubscriptionsData(data);
     }
   };
