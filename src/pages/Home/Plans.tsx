@@ -1,7 +1,8 @@
 import { Box, useTheme } from "@mui/material";
 import CustomText from "../../components/CustomText/CustomText";
 import Slider from "react-slick";
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material"; // Import Material-UI icons for arrows
 
 import PlanCard from "../../components/Plans/PlanCard";
@@ -35,8 +36,6 @@ const Plans = () => {
       setAvailableSubscriptionsData(data);
     } else {
       const { data } = await getAPublicPlans();
-
-      console.log('getAPublicPlans..............',data)
 
       setAvailableSubscriptionsData(data);
     }

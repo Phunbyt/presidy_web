@@ -1,6 +1,8 @@
 import { Box, Stack, useTheme } from "@mui/material";
 import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material"; // Import Material-UI icons for arrows
 import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import UserPlanCard from "../../components/Plans/UserPlanCard";
 import { noComments } from "../../assets/svgs";
 import CustomText from "../../components/CustomText/CustomText";
