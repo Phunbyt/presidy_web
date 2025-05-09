@@ -2,7 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./src/assets/images/presidyLogo.png" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="./src/assets/images/presidyLogo.png"
+    />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -55,18 +59,12 @@
     <meta property="og:site_name" content="Presidy" />
     <meta property="og:title" content="Presidy" />
     <meta property="og:type" content="website" />
-    <meta
-      property="og:image"
-      content="./src/assets/images/presidyLogo.png"
-    />
+    <meta property="og:image" content="./src/assets/images/presidyLogo.png" />
     <meta property="og:locale" content="en_IE" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Presidy" />
     <meta name="twitter:description" content="Shared subscription solutions" />
-    <meta
-      name="twitter:image"
-      content="./src/assets/images/presidyLogo.png"
-    />
+    <meta name="twitter:image" content="./src/assets/images/presidyLogo.png" />
     <meta name="twitter:image:alt" content="Presidy" />
 
     <meta name="description" content="Shared subscription solutions" />
@@ -152,6 +150,20 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-YKSP1PC4YY"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-YKSP1PC4YY");
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
