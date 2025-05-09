@@ -1,6 +1,5 @@
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { Box, Button } from "@mui/material";
 import { useContext } from "react";
 import NavBar from "./components/NavBar/NavBar";
 import { GlobalContext } from "./context/GlobalContext";
@@ -23,7 +22,7 @@ import Moderator from "./pages/Moderator/Moderator";
 import ModeratorDashboard from "./pages/ModeratorDashboard/ModeratorDashboard";
 
 export default function App() {
-  const { darkTheme, theme, toggleTheme } = useContext(GlobalContext);
+  const { theme } = useContext(GlobalContext);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -54,18 +53,6 @@ export default function App() {
         <Footer />
       </BrowserRouter>
       <ToastPopup />
-
-      <Box
-        sx={{
-          position: "sticky",
-          bottom: 0,
-        }}
-      >
-        <main>This app is using the {darkTheme ? "dark" : "light"} mode</main>
-        <Button sx={{ background: "orange" }} onClick={toggleTheme}>
-          Toggle theme
-        </Button>
-      </Box>
     </ThemeProvider>
   );
 }
