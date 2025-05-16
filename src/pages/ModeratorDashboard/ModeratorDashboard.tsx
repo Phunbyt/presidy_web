@@ -20,9 +20,13 @@ import {
   addBankAccount,
   addPlan,
   getModeratorDashboardData,
+  uploadReciept,
 } from "../../api/lib/moderator";
 import Loader from "../../components/Loader/Loader";
 import { hand } from "../../assets/animations";
+import UploadReceiptTab from "./UploadReceiptTab";
+import AddRecieptDialog from "./AddRecieptDialog";
+// import ViewRecieptDialog from "./ViewRecieptDialog";
 
 interface Subscription {
   id: string;
@@ -59,6 +63,10 @@ const ModeratorDashboard = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [openSubscriptionDialog, setOpenSubscriptionDialog] = useState(false);
   const [openBankDialog, setOpenBankDialog] = useState(false);
+  const [openAddPaymentRecieptDialog, setOpenAddPaymentRecieptDialog] =
+    useState(false);
+  // const [openViewPaymentRecieptDialog, setOpenViewPaymentRecieptDialog] =
+  //   useState(false);
   // const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   // const [dialogAction, setDialogAction] = useState<"delete" | "primary">(
   //   "delete"
@@ -69,8 +77,16 @@ const ModeratorDashboard = () => {
 
   const [newSubscription, setNewSubscription] = useState({
     planId: "",
+    name: "",
     familyLink: "",
+    moderatorDetails: false,
+    moderatorAvailability: "",
+    webDetails: false,
+    specialEmail: false,
+    webDetailsData: "",
   });
+  const [newPaymentRecieptPlan, setNewPaymentRecieptPlan] = useState("");
+  const [newPaymentRecieptFile, setNewPaymentRecieptFile] = useState(null);
 
   const [newBankAccount, setNewBankAccount] = useState({
     firstName: "",
@@ -88,19 +104,57 @@ const ModeratorDashboard = () => {
   const [bankAccounts, setBankAccounts] = useState<BankAccount[]>([]);
 
   const [payouts, setPayouts] = useState<Payout[]>([]);
+  const [paymentReceipts, setPaymentReceipts] = useState<Payout[]>([]);
 
   const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
   };
 
+  const handleAddPaymentRecieptDialog = (value: boolean) => {
+    setOpenAddPaymentRecieptDialog(value);
+  };
+
+  // const handleViewPaymentRecieptDialog = (value: boolean) => {
+  //   setOpenViewPaymentRecieptDialog(value);
+  // };
+
   const handleSubscriptionChange = (
     e: Record<string, Record<string, string>>
   ) => {
     const { id, value, name } = e.target;
+    const changeKey = id || name;
 
-    const changeValue = id || name;
+    let updatedData: any = { [changeKey]: value };
 
-    setNewSubscription((prev) => ({ ...prev, [changeValue]: value }));
+    if (changeKey === "planId") {
+      const fullDetails = availableSubscriptions.find(
+        (sub) => sub._id === value
+      );
+      if (fullDetails) {
+        updatedData = {
+          ...updatedData,
+          ...fullDetails,
+          familyLink: fullDetails.moderatorDetails
+            ? fullDetails.name
+            : fullDetails.familyLink,
+        };
+      }
+    }
+
+    setNewSubscription((prev) => {
+      const newSub = {
+        ...prev,
+        ...updatedData,
+      };
+
+      return newSub;
+    });
+  };
+
+  const handlePaymentReceiptPlan = (e: any) => {
+    const { value } = e.target;
+
+    setNewPaymentRecieptPlan(value);
   };
 
   const handleBankAccountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -111,15 +165,37 @@ const ModeratorDashboard = () => {
   const handleAddSubscription = async () => {
     setIsLoading(true);
 
-    if (!newSubscription.planId || !newSubscription.familyLink) {
+    if (!newSubscription.planId) {
       toast.error("Please fill all required fields");
       setIsLoading(false);
 
       return;
     }
 
-    if (!validator.isURL(newSubscription.familyLink)) {
+    if (
+      newSubscription.webDetails &&
+      !validator.isURL(newSubscription.familyLink)
+    ) {
       toast.error("Please enter a valid family link URL");
+      setIsLoading(false);
+
+      return;
+    }
+
+    if (newSubscription.webDetails && !newSubscription.webDetailsData) {
+      toast.error("Please fill all required fields");
+      setIsLoading(false);
+
+      return;
+    }
+
+    if (
+      newSubscription.moderatorDetails &&
+      newSubscription.moderatorAvailability === "no"
+    ) {
+      toast.error(
+        "Sorry we want our moderators to be available most of the time."
+      );
       setIsLoading(false);
 
       return;
@@ -139,10 +215,56 @@ const ModeratorDashboard = () => {
       (sub) => sub.planId !== newSubscription.planId
     );
     setAvailableSubscriptions(newList);
-    setSubscriptions([...subscriptions, data]);
+
+    // id: string;
+    // name: string;
+    // familyLink: string;
+    // status: "active" | "pending" | "inactive";
+    // familyActiveMembers: number;
+    // familyMembersLimit: number;
+
+    // {
+    //   createdAt: "2025-05-16T12:51:18.825Z";
+    //   familyActiveMembers: 0;
+    //   familyLink: "";
+    //   familyMembersLimit: 5;
+    //   planId: "677c07d729559b3056a4305a";
+    //   updatedAt: "2025-05-16T12:51:18.825Z";
+    //   user: "67e03888b142400ebe10f9a1";
+    // }
+
+    // {
+    //   createdAt: "2025-05-16T12:51:17.538Z";
+    //   familyActiveMembers: 0;
+    //   familyLink: "";
+    //   familyMembersLimit: 5;
+    //   familyUrlId: "bZXfefmC0L";
+    //   planId: "677c07d729559b3056a4305a";
+    //   presidyLink: "https://www.presidy.com/family/bZXfefmC0L";
+    //   updatedAt: "2025-05-16T12:51:17.538Z";
+    // }
+    setSubscriptions([
+      ...subscriptions,
+      {
+        id: data.moderatorPlan._id,
+        name: newSubscription.name,
+        familyLink: data.moderatorPlan.familyLink,
+        status: "pending",
+        familyActiveMembers: data.moderatorPlan.familyActiveMembers,
+        familyMembersLimit: data.moderatorPlan.familyMembersLimit,
+        planId: data.moderatorPlan._id,
+        specialEmail: newSubscription.specialEmail,
+      },
+    ]);
     setNewSubscription({
       planId: "",
       familyLink: "",
+      moderatorDetails: false,
+      specialEmail: false,
+      moderatorAvailability: "",
+      webDetails: false,
+      webDetailsData: "",
+      name: "",
     });
     setIsLoading(false);
 
@@ -246,10 +368,10 @@ const ModeratorDashboard = () => {
   };
 
   const handleBankDialog = (value: boolean) => {
-    if (bankAccounts.length >= 3) {
+    if (bankAccounts.length >= 1) {
       setIsLoading(false);
       setOpenBankDialog(false);
-      toast.error("You can only add up to 3 bank accounts");
+      toast.error("You can only add up to 1 bank accounts");
       return;
     }
 
@@ -264,12 +386,47 @@ const ModeratorDashboard = () => {
   //   openConfirmDialog(buttonValue, id);
   // };
 
+  const handleFileChange = (event: any) => {
+    const file = event.target.files[0];
+
+    setNewPaymentRecieptFile(file);
+  };
+
+  const handleUploadPayment = async () => {
+    setIsLoading(true);
+
+    if (!newPaymentRecieptFile) {
+      toast.error("Please enter a valid family link URL");
+      setIsLoading(false);
+
+      return;
+    }
+
+    const { data, error } = await uploadReciept({
+      token,
+      file: newPaymentRecieptFile,
+      planId: newPaymentRecieptPlan,
+    });
+    if (error) {
+      setIsLoading(false);
+      return;
+    }
+
+    setPaymentReceipts((prev) => [data, ...prev]);
+    setNewPaymentRecieptPlan("");
+    setNewPaymentRecieptFile(null);
+    setIsLoading(false);
+    setOpenAddPaymentRecieptDialog(false);
+    toast.success("Payment Receipt added successfully!");
+  };
+
   const handleDashboardData = async () => {
     setIsPageLoading(true);
     const { data } = await getModeratorDashboardData(token);
     setSubscriptions(data.moderatorPlans);
     setBankAccounts(data.bankAccounts);
     setPayouts(data.transactions);
+    setPaymentReceipts(data.moderatorReceipts);
     setAvailableSubscriptions(data.emptyPlans);
     setIsPageLoading(false);
   };
@@ -315,6 +472,7 @@ const ModeratorDashboard = () => {
               <SubscriptionsTab
                 handleSubscriptionDialog={handleSubscriptionDialog}
                 subscriptions={subscriptions}
+                availableSubscriptions={availableSubscriptions}
               />
             )}
 
@@ -329,6 +487,14 @@ const ModeratorDashboard = () => {
 
             {/* Payout History Tab */}
             {activeTab === 2 && <PayoutHistoryTab payouts={payouts} />}
+
+            {/* Payout History Tab */}
+            {activeTab === 3 && (
+              <UploadReceiptTab
+                paymentReceipts={paymentReceipts}
+                handleAddPaymentRecieptDialog={handleAddPaymentRecieptDialog}
+              />
+            )}
           </Box>
         </>
       )}
@@ -351,6 +517,22 @@ const ModeratorDashboard = () => {
         handleAddBankAccount={handleAddBankAccount}
         isLoading={isLoading}
       />
+
+      {/* Add Payment Receipt Dialog */}
+      <AddRecieptDialog
+        openAddPaymentRecieptDialog={openAddPaymentRecieptDialog}
+        handleAddPaymentRecieptDialog={handleAddPaymentRecieptDialog}
+        subscriptions={subscriptions}
+        handlePaymentReceiptPlan={handlePaymentReceiptPlan}
+        newPaymentRecieptPlan={newPaymentRecieptPlan}
+        handleFileChange={handleFileChange}
+        handleUploadPayment={handleUploadPayment}
+        isLoading={isLoading}
+      />
+      {/* <ViewRecieptDialog
+        openViewPaymentRecieptDialog={openViewPaymentRecieptDialog}
+        handleViewPaymentRecieptDialog={handleViewPaymentRecieptDialog}
+      /> */}
       {/* Confirmation Dialog */}
       {/* <ConfirmationDialog
         confirmDialogOpen={confirmDialogOpen}

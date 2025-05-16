@@ -5,7 +5,7 @@ import CustomText from "../../components/CustomText/CustomText";
 const featuresList = [
   {
     title: "Create",
-    description: "Create a Family Subscription on our supported platforms",
+    description: "Create a Family Subscription on our supported platforms... choose the maximum capacity",
     image: painter,
   },
   {
@@ -17,7 +17,7 @@ const featuresList = [
   {
     title: "Serenade",
     description:
-      "Set up once and enjoy all the benefits of premium services immediately.",
+      "Set up once and enjoy all FREE subscription and additional perks",
     image: musicCelebrate,
   },
 ];

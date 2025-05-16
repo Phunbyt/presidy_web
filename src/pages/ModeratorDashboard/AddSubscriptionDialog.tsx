@@ -10,12 +10,16 @@ import {
   MenuItem,
 } from "@mui/material";
 import CustomInputField from "../../components/CustomInputField/CustomInputField";
-import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomText from "../../components/CustomText/CustomText";
+import CustomButton from "../../components/CustomButton/CustomButton";
 
 interface Subscription {
   planId: string;
   familyLink: string;
+  moderatorDetails: boolean;
+  moderatorAvailability: string;
+  webDetails: boolean;
+  webDetailsData: string;
 }
 
 // interface SubscriptionData {
@@ -28,7 +32,6 @@ interface Subscription {
 //   familyActiveMembers: number;
 //   familyMembersLimit: number;
 // }
-
 
 interface AddSubscriptionDialogProps {
   openSubscriptionDialog: boolean;
@@ -87,16 +90,68 @@ const AddSubscriptionDialog: React.FC<AddSubscriptionDialogProps> = ({
             </Select>
           </FormControl>
 
-          <CustomInputField
-            fullWidth
-            label="Family Link URL"
-            id="familyLink"
-            type="text"
-            value={newSubscription.familyLink}
-            onChange={handleSubscriptionChange}
-            required
-            helperText="The invitation link to join your family plan"
-          />
+          {newSubscription.planId && (
+            <Stack spacing={2}>
+              {newSubscription.moderatorDetails ? (
+                <>
+                  <CustomText
+                    text="By proceeding, you agree to be available whenever needed to add new users to the family plan."
+                    style={{ textTransform: "capitalize" }}
+                  />
+
+                  <FormControl fullWidth required>
+                    <InputLabel id="moderator-agreement">
+                      Moderator Agreement
+                    </InputLabel>
+                    <Select
+                      labelId="moderator-agreement"
+                      label="Moderator Agreement"
+                      name="moderatorAvailability"
+                      value={newSubscription.moderatorAvailability || ""}
+                      onChange={handleSubscriptionChange}
+                    >
+                      <MenuItem value="yes">Yes</MenuItem>
+                      <MenuItem value="no">No</MenuItem>
+                    </Select>
+                  </FormControl>
+                </>
+              ) : newSubscription.webDetails ? (
+                <>
+                  <CustomInputField
+                    fullWidth
+                    label="Family Link URL"
+                    id="familyLink"
+                    type="text"
+                    value={newSubscription.familyLink}
+                    onChange={handleSubscriptionChange}
+                    required
+                    helperText="The invitation link to join your family plan"
+                  />
+                  <CustomInputField
+                    fullWidth
+                    label="Service Provider Details e.g address"
+                    id="webDetailsData"
+                    type="text"
+                    value={newSubscription.webDetailsData}
+                    onChange={handleSubscriptionChange}
+                    required
+                    helperText="Additional information required by your service provider"
+                  />
+                </>
+              ) : (
+                <CustomInputField
+                  fullWidth
+                  label="Family Link URL"
+                  id="familyLink"
+                  type="text"
+                  value={newSubscription.familyLink}
+                  onChange={handleSubscriptionChange}
+                  required
+                  helperText="The invitation link to join your family plan"
+                />
+              )}
+            </Stack>
+          )}
         </Stack>
       </DialogContent>
       <DialogActions>

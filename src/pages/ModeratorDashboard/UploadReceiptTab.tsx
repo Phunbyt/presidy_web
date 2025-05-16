@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import CustomText from "../../components/CustomText/CustomText";
 import {
   Box,
   Stack,
@@ -11,74 +12,54 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Link,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-// import EditIcon from "@mui/icons-material/Edit";
-// import DeleteIcon from "@mui/icons-material/Delete";
-
-import CustomText from "../../components/CustomText/CustomText";
+import { Add } from "@mui/icons-material";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import { sittingLady } from "../../assets/svgs";
 
-interface SubscriptionsTabProps {
-  handleSubscriptionDialog: (open: boolean) => void;
-  subscriptions: {
-    id: string;
-    name: string;
-    familyLink: string;
-    status: "active" | "pending" | "inactive";
-    familyActiveMembers: number;
-    familyMembersLimit: number;
-  }[];
+import { convertISOToDDMMYYYY } from "../../helpers/date-formatter.helper";
 
-  availableSubscriptions: any;
-}
-
-const SubscriptionsTab: React.FC<SubscriptionsTabProps> = ({
-  handleSubscriptionDialog,
-  subscriptions,
-  availableSubscriptions,
-}) => {
+const UploadReceiptTab = ({
+  handleAddPaymentRecieptDialog,
+  paymentReceipts,
+}: any) => {
   const theme = useTheme();
 
   return (
     <Box>
       <Stack
-        direction="row"
+        direction={{ xs: "column", sm: "row" }}
         justifyContent="space-between"
-        alignItems="center"
+        alignItems={{ xs: "flex-start", sm: "center" }}
         mb={3}
+        gap={2}
       >
-        <CustomText text="Your Family Subscriptions" />
-
-        {availableSubscriptions.length ? (
-          <CustomButton
-            text="Add Subscription"
-            startIcon={<AddIcon />}
-            onClick={() => handleSubscriptionDialog(true)}
-          />
-        ) : (
-          ""
-        )}
+        <CustomText
+          text="Add debit receipt of each subscription you have paid for"
+          style={{ fontWeight: 600 }}
+        />
+        <CustomButton
+          text="Add Payment receipt"
+          startIcon={<Add />}
+          onClick={() => handleAddPaymentRecieptDialog(true)}
+        />
       </Stack>
 
-      {subscriptions.length === 0 ? (
+      {paymentReceipts.length === 0 ? (
         <Paper sx={{ p: 4, textAlign: "center" }}>
           <Box
             component="img"
             src={sittingLady}
-            alt="No subscriptions"
+            alt="No Payment reciept"
             sx={{ width: 200, mb: 2 }}
           />
-          <CustomText text="No Subscriptions Yet" />
-          <CustomText
-            text=" You haven't added any family subscriptions yet. Add your first one
-            to get started!"
-          />
+          <CustomText text="No Payment reciept Yet" />
+          <CustomText text="Get paid on Presidy. Add evidence of debit from service provider and get your money back" />
           <CustomButton
-            text="Add Subscription"
-            startIcon={<AddIcon />}
-            onClick={() => handleSubscriptionDialog(true)}
+            text="Add Payment receipt"
+            startIcon={<Add />}
+            onClick={() => handleAddPaymentRecieptDialog(true)}
           />
         </Paper>
       ) : (
@@ -95,6 +76,7 @@ const SubscriptionsTab: React.FC<SubscriptionsTabProps> = ({
                 >
                   Service
                 </TableCell>
+
                 <TableCell
                   sx={{
                     fontSize: { xs: "1rem", sm: "1.25rem", md: "1.5rem" },
@@ -102,8 +84,9 @@ const SubscriptionsTab: React.FC<SubscriptionsTabProps> = ({
                     fontWeight: 600,
                   }}
                 >
-                  Status
+                  Payment Receipt
                 </TableCell>
+
                 <TableCell
                   sx={{
                     fontSize: { xs: "1rem", sm: "1.25rem", md: "1.5rem" },
@@ -111,16 +94,16 @@ const SubscriptionsTab: React.FC<SubscriptionsTabProps> = ({
                     fontWeight: 600,
                   }}
                 >
-                  Members
+                  Date
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {subscriptions.map((sub) => (
-                <TableRow key={sub.id}>
+              {paymentReceipts.map((receipt: any) => (
+                <TableRow key={receipt._id}>
                   <TableCell>
                     <CustomText
-                      text={sub.name}
+                      text={receipt.planId.planId.name}
                       style={{
                         fontSize: { xs: "1rem", sm: "1.25rem", md: "1.5rem" },
                         color: theme.palette.text.primary,
@@ -128,30 +111,26 @@ const SubscriptionsTab: React.FC<SubscriptionsTabProps> = ({
                         textTransform: "capitalize",
                       }}
                     />
-                    <CustomText
-                      text={sub.familyLink}
-                      style={{
-                        fontSize: { xs: "0.75rem", sm: "0.875rem", md: "1rem" },
-                        color: theme.palette.text.secondary,
-                        mb: 0.5,
-                      }}
-                    />
                   </TableCell>
                   <TableCell>
                     <Chip
-                      label={sub.status}
-                      color={
-                        sub.status === "active"
-                          ? "success"
-                          : sub.status === "pending"
-                          ? "warning"
-                          : "error"
+                      label={
+                        <Link target="_blank" href={receipt.receiptLink}>
+                          View Receipt
+                        </Link>
                       }
+                      color={"success"}
                       size="small"
                     />
                   </TableCell>
                   <TableCell>
-                    {sub.familyActiveMembers}/{sub.familyMembersLimit}
+                    <CustomText
+                      text={convertISOToDDMMYYYY(receipt.createdAt)}
+                      style={{
+                        fontSize: { xs: "0.7rem", sm: "0.8rem", md: "1rem" },
+                        color: theme.palette.text.primary,
+                      }}
+                    />
                   </TableCell>
                 </TableRow>
               ))}
@@ -163,4 +142,4 @@ const SubscriptionsTab: React.FC<SubscriptionsTabProps> = ({
   );
 };
 
-export default SubscriptionsTab;
+export default UploadReceiptTab;

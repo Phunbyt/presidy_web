@@ -20,6 +20,7 @@ import ComingSoon from "./pages/ComingSoon/ComingSoon";
 import ChangePassword from "./pages/ChangePassword/ChangePassword";
 import Moderator from "./pages/Moderator/Moderator";
 import ModeratorDashboard from "./pages/ModeratorDashboard/ModeratorDashboard";
+import Family from "./pages/Family/Family";
 
 export default function App() {
   const { theme } = useContext(GlobalContext);
@@ -46,6 +47,7 @@ export default function App() {
 
           <Route path="/forgot-password" Component={ForgotPassword} />
           <Route path="/change-password" Component={ChangePassword} />
+          <Route path="/family/:familyUrlId" Component={Family} />
           <Route path="/coming" Component={ComingSoon} />
           <Route path="*" Component={ComingSoon} />
         </Routes>

@@ -121,3 +121,18 @@ export const sendSupportMessage = async ({
     return { error: true, message: error.response.data.message };
   }
 };
+
+export const getFamilyDetails = async ({
+  familyUrlId,
+}: {
+  familyUrlId: string;
+}) => {
+  try {
+    const { data } = await axiosClient.get(`family/${familyUrlId}`);
+
+    return data;
+  } catch (error: any) {
+    toast.error(error.response.data.message);
+    return { error: true, message: error.response.data.message };
+  }
+};

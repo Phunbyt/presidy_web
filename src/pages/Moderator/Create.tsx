@@ -27,6 +27,7 @@ const Create = () => {
     lastName: "",
     accountNumber: "",
     bankName: "",
+    phoneNumber: "",
   });
   const handleModeratorData = (key: string, value: string) => {
     setModeratorData((prevState) => ({ ...prevState, [key]: value }));
@@ -38,9 +39,23 @@ const Create = () => {
       !moderatorData.accountNumber ||
       !moderatorData.bankName ||
       !moderatorData.firstName ||
+      !moderatorData.phoneNumber ||
       !moderatorData.lastName
     ) {
       toast.error("Please enter all fields, they're compulsory!");
+      setIsLoading(false);
+
+      return;
+    }
+
+    if (!moderatorData.phoneNumber.startsWith("234")) {
+      toast.error("Please include country code in your phone number");
+      setIsLoading(false);
+
+      return;
+    }
+    if (moderatorData.phoneNumber.length !== 13) {
+      toast.error("Invalid Phone number provided");
       setIsLoading(false);
 
       return;
@@ -50,6 +65,7 @@ const Create = () => {
       {
         ...moderatorData,
         accountNumber: +moderatorData.accountNumber,
+        phoneNumber: +moderatorData.phoneNumber,
       },
       token
     );
@@ -119,7 +135,7 @@ const Create = () => {
                 }
               />
             </Grid>
-            {/* Username */}
+            {/* Account number */}
             <Grid size={6}>
               <CustomInputField
                 id="accountNumber"
@@ -127,6 +143,19 @@ const Create = () => {
                 type="number"
                 fullWidth
                 value={moderatorData.accountNumber}
+                onChange={(e) =>
+                  handleModeratorData(e.target.id, e.target.value)
+                }
+              />
+            </Grid>
+            {/* phoneNumber number */}
+            <Grid size={6}>
+              <CustomInputField
+                id="phoneNumber"
+                label="Phone Number with country code 234810..."
+                type="number"
+                fullWidth
+                value={moderatorData.phoneNumber}
                 onChange={(e) =>
                   handleModeratorData(e.target.id, e.target.value)
                 }
