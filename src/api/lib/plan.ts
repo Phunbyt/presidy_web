@@ -132,7 +132,7 @@ export const getFamilyDetails = async ({
 
     return data;
   } catch (error: any) {
-    toast.error(error.response.data.message);
+    // toast.error(error.response.data.message);
     return { error: true, message: error.response.data.message };
   }
 };
