@@ -296,7 +296,7 @@ const ModeratorDashboard = () => {
     const { data, error } = await addBankAccount(
       {
         ...newBankAccount,
-        accountNumber: +newBankAccount.accountNumber,
+        accountNumber: newBankAccount.accountNumber,
       },
       token
     );

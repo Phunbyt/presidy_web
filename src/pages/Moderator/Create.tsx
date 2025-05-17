@@ -64,7 +64,7 @@ const Create = () => {
     const user = await registerModerator(
       {
         ...moderatorData,
-        accountNumber: +moderatorData.accountNumber,
+        accountNumber: moderatorData.accountNumber,
         phoneNumber: +moderatorData.phoneNumber,
       },
       token
