@@ -10,6 +10,7 @@ import {
 import CustomText from "../../components/CustomText/CustomText";
 import { getFamilyDetails } from "../../api/lib/plan";
 import { toast } from "react-toastify";
+import CustomButton from "../../components/CustomButton/CustomButton";
 
 type FamilyData = {
   familyLink: string;
@@ -70,12 +71,8 @@ const Family = () => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Typography
-              variant="h6"
-              sx={{ mb: 2, textTransform: "capitalize" }}
-            >
-              Clike here to Join {data.planName}
-            </Typography>
+            <Link href={data.planName} />
+            <CustomButton text="Click here to Join" />
           </Link>
 
           <CustomText
